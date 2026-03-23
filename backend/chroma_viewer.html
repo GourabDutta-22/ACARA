@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>ACARA — ChromaDB Viewer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #e2e8f0; padding: 2rem; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.3rem; color: #a78bfa; }
+  .sub { color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th { background: #1e1b4b; color: #c4b5fd; padding: 0.6rem 0.8rem; text-align: left; position: sticky; top: 0; }
+  td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #1e293b; vertical-align: top; }
+  tr:hover td { background: #1a1a2e; }
+  .id { font-family: monospace; color: #7c3aed; white-space: nowrap; }
+  .text { max-width: 420px; color: #cbd5e1; }
+  .meta { color: #94a3b8; white-space: nowrap; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; color: #fff; }
+  .count { display: inline-block; background: #7c3aed; color: #fff; padding: 4px 14px; border-radius: 999px; font-size: 0.9rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+  <h1>⚡ ACARA — ChromaDB Vector Store</h1>
+  <div class="sub">Generated: 2026-03-22 07:07 UTC</div>
+  <div class="count">112 documents</div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Text Preview</th><th>Source</th><th>Origin Query</th><th>Freshness</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="id">188a67e5…</td>
+      <td class="text">IEM is a professional services firm dedicated to building a safe, secure, and resilient world. Since 1985, our innovative strategies, technologies, and solutions have helped government and private sector customers achieve measurable results—lives saved, communities resiliently rebuilt, risks reduced…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">IEM</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">f83b4872…</td>
+      <td class="text">|  |  |
+     --- | [...] |  |  |  |
+     --- [...] |  |  |  |
+     ---
+event a grand success. Here’s to another thrilling edition next year! Read more about IEM Ashram League 2K25: A Celebration of Talent and Triumph [...] 7th International Conference on Emerging Trends in Mathematical Sciences & Co…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">IEM Kolkata</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">2d7ee2d2…</td>
+      <td class="text">{'query': 'cricket', 'response_time': 1.11, 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://en.wikipedia.org/wiki/Cricket', 'title': 'Cricket - Wikipedia', 'content': '| | * v * t * e Twenty20 cricket competitions | | --- | | Current | | | | | --- | --- | | Mu…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">56cee740…</td>
+      <td class="text">International League T20 (since 2023) Major League Cricket (since 2023) Nepal Premier League (since 2024) Women\'s Super Smash "Super Smash (women\'s cricket)") (since 2007) Women\'s Big Bash League (since 2015) Women\'s Caribbean Premier League (since 2022) Women\'s Premier League "Women\'s Premier…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">5c205228…</td>
+      <td class="text">2016) National T20 Championship (since 2023) National T20 Cup "National T20 Cup (Afghanistan)") (since 2024) Europe T20 Blast (since 2003) Dutch Twenty20 Cup (since 2007) T20 Scottish Cup (since 2008) Inter-Provincial Trophy (since 2013) Women\'s Super Series (since 2015) Women\'s T20 Blast (since 2…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">b429e61f…</td>
+      <td class="text"># Cricket. #### History of Cricket. Cricket On The Artillery Ground. Cricket On The Artillery Ground. ### Early Cricket (Pre 1799). The first reference to cricket being played as an adult sport was in 1611, and in the same year, a dictionary defined cricket as a boys' game. Village cricket had devel…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">49ef4f21…</td>
+      <td class="text">until the formation of MCC and the opening of Lord's Cricket Ground in 1787. Cricket was introduced to North America via the English colonies as early as the 17th century, and in the 18th century it arrived in other parts of the globe.", 'score': 0.4858686, 'raw_content': None}, {'url': 'https://www…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">5d5c7e75…</td>
+      <td class="text">{'query': 'a bug', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://tepapa.govt.nz/discover-collections/read-watch-play/science-and-nature/spiders-and-insects/your-bug-questions/what', 'title': 'What is a bug? Insects, arachnids, and myriapods - Te Papa', 'cont…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">a bug</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">0dee31aa…</td>
+      <td class="text">ants, and wasps. The easiest way to recognise an arachnid is to count the legs. They have eight legs and no wings. Not all arachnids are spiders. Arachnids have two main body segments. Myriapods are wingless bugs with lots of body segments. Most of the segments carry a pair of legs (two pairs in mil…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">a bug</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">946f4b7f…</td>
+      <td class="text">at the base, and incomplete metamorphosis and are often economic pests. The software was full of bugs. Don't bug me with petty details. of the eyes   **:** to cause to bug. His eyes were *bugged* with horror. ## Synonyms of *bug*. ## Examples of *bug* in a Sentence. probably from bug entry 1. The fi…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">a bug</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">1ca36969…</td>
+      <td class="text">'title': 'BUG | definition in the Cambridge English Dictionary', 'content': 'bug noun (FAULT) ... a mistake or problem in the way something works: He said they had eliminated all the bugs in the software, and we hoped this was true.', 'score': 0.7251239, 'raw_content': None}], 'response_time': 1.08,…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">a bug</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">616bcfc0…</td>
+      <td class="text">{'query': 'Iem newtown kolkata', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://en.wikipedia.org/wiki/University_of_Engineering_%26_Management,_Kolkata', 'title': 'University of Engineering & Management, Kolkata - Wikipedia', 'content': 'The **University of E…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">Iem newtown kolkata</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">81e0a4fc…</td>
+      <td class="text">Group, which also established IEM and the University of Engineering & Management, Jaipur in Rajasthan in 2011. "Mr. Parthajit Dholey, alumni member of the IEM-UEM group and co-founder of HACKCIEUX, a startup by 2016 pass out IEM-UEM group students conducted special workshop on Ethical Hacking for th…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">Iem newtown kolkata</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">b4726e65…</td>
+      <td class="text">of New Town, Kolkata ...', 'content': 'IEM International School, located in the heart of New Town, Kolkata, offers a nurturing environment that fosters academic excellence, creativity', 'score': 0.8106142, 'raw_content': None}, {'url': 'https://www.facebook.com/IEMPSNewTown/', 'title': 'IEM Public S…</td>
+      <td><span class="badge" style="background:#7c3aed">web_search</span></td>
+      <td class="meta">Iem newtown kolkata</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">23037361…</td>
+      <td class="text">{'query': 'Who is the worldcup winner?', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.topendsports.com/events/worldcupsoccer/winners.htm', 'title': 'FIFA World Cup Winners List - All Champions 1930-2022', 'content': 'Argentina won the most recent World …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Who is the worldcup winner?</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">b20cb5d3…</td>
+      <td class="text">{'query': 'in cricket', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.olympics.com/en/sports/cricket/', 'title': 'Cricket - Olympics.com', 'content': 'Cricket is a bat-and-ball team sport where the batting side tries to score as many runs as possible whi…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">in cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">1be37cde…</td>
+      <td class="text">T20 County Cup (since 2025) | | Domestic | India Tamil Nadu Premier League (since 2016) Andhra Premier League (since 2022) Maharaja Trophy KSCA T20 (since 2022) Rajasthan Premier League (since 2023) Bengal Pro T20 League (since 2024) Delhi Premier League T20 (since 2024) | | | Defunct | | | | | --- …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">in cricket</td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">94d8b92b…</td>
+      <td class="text">{'query': '2026', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://en.wikipedia.org/wiki/2026', 'title': '2026 - Wikipedia', 'content': "* March 22 – The 2026 Slovenian parliamentary election is scheduled to be held. * March 24 – The 2026 Danish general electio…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">2026 </td>
+      <td class="meta">—</td>
+    </tr>
+    <tr>
+      <td class="id">82afeab8…</td>
+      <td class="text">India won the ICC T20 World cup men also wemen in 2026.…</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T05:23:43</td>
+    </tr>
+    <tr>
+      <td class="id">dc5cd676…</td>
+      <td class="text">{'query': 'India won cricket', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.cnn.com/2025/11/02/sport/india-cricket-womenn-world-cup-intl-hnk', 'title': "Women's Cricket World Cup: India wins for first time, beating ... - CNN", 'content': "India's player…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India won cricket</td>
+      <td class="meta">2026-03-22T05:25:07</td>
+    </tr>
+    <tr>
+      <td class="id">344ca686…</td>
+      <td class="text">. Reuters A group of men - with two of them holding Indian flags - celebrate India's T20 World Cup victory near Delhi's India Gate on Sunday night. The Board of Control for Cricket in India (BCCI) is yet to announce when and where the victory celebrations will be held - an event in which all team me…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India won cricket</td>
+      <td class="meta">2026-03-22T05:25:14</td>
+    </tr>
+    <tr>
+      <td class="id">7222d9c4…</td>
+      <td class="text">\nFacebook: https://www.facebook.com/Newsxonline\nTwitter: https://twitter.com/NewsX\n\n', 'score': 0.98215127, 'raw_content': None}, {'url': 'https://www.youtube.com/watch?v=PyzRu1C1fzU', 'title': 'Celebrations Erupt Across Nation After Historic T20 Victory - YouTube', 'content': "INDIA WINS WORLD …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India won cricket</td>
+      <td class="meta">2026-03-22T05:25:18</td>
+    </tr>
+    <tr>
+      <td class="id">7af3ccab…</td>
+      <td class="text">. 3 Time Men's Cricket World Cup Champion", 'score': 0.96295285, 'raw_content': None}], 'response_time': 1.01, 'request_id': 'efd9c8cc-4759-402d-8751-c93e10e064ad'}…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India won cricket</td>
+      <td class="meta">2026-03-22T05:25:19</td>
+    </tr>
+    <tr>
+      <td class="id">f4f9ae5b…</td>
+      <td class="text">The India national cricket team is one of the full members of the International Cricket Council (ICC), the governing body of cricket. There have been thirteen editions of the Cricket World Cup, a quadrennial event hosted by the ICC in the ODI format since 1975. India has participated in every editio…</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T05:27:04</td>
+    </tr>
+    <tr>
+      <td class="id">83b95ad8…</td>
+      <td class="text">In the first two editions in 1975 and 1979, the Indian team captained by Srinivasaraghavan Venkataraghavan won only a single match and did not progress past the group stage. Kapil Dev led the India team in the third edition of the World Cup in 1983. India registered its first ever World Cup victorie…</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T05:27:04</td>
+    </tr>
+    <tr>
+      <td class="id">f39682c7…</td>
+      <td class="text">The Indian side led by Sourav Ganguly reached its second World Cup final in 2003 and finished as runners-up. India was eliminated in the group stage in the next edition, having lost both the matches it played. In the 2011 edition co-hosted by India, the Indian team led by MS Dhoni progressed to the …</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T05:27:04</td>
+    </tr>
+    <tr>
+      <td class="id">f825db1a…</td>
+      <td class="text">Sachin Tendulkar is the leading run scorer for India with 2278 runs and holds the record for the most runs across World Cups. Mohammed Shami is the leading wicket taking bowler for India with 55 wickets. Virat Kohli holds the record for the most runs scored in a single edition of the World Cup with …</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T05:27:04</td>
+    </tr>
+    <tr>
+      <td class="id">b5eab02c…</td>
+      <td class="text">{'query': 'I want to know about ODI', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.sportmonks.com/cricket-api/one-day-international-api/', 'title': 'One Day International | Cricket API - Sportmonks', 'content': 'One Day International (ODI) is a form of …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">I want to know about ODI</td>
+      <td class="meta">2026-03-22T05:27:49</td>
+    </tr>
+    <tr>
+      <td class="id">351501a1…</td>
+      <td class="text">. It offers a new declarative design approach.', 'score': 0.6490677, 'raw_content': None}, {'url': 'https://cricket.fandom.com/wiki/One_Day_International', 'title': 'One Day International | Cricket Wiki | Fandom', 'content': 'One Day International (colloquially called ODI) is second format of Cricke…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">I want to know about ODI</td>
+      <td class="meta">2026-03-22T05:27:52</td>
+    </tr>
+    <tr>
+      <td class="id">c2389a2e…</td>
+      <td class="text">{'query': 'When India has won the ODI', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.olympics.com/en/news/how-many-odi-cricket-world-cup-india-win', 'title': 'How many times has India won ODI World Cup - Olympics.com', 'content': 'India are one of the t…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">When India has won the ODI</td>
+      <td class="meta">2026-03-22T05:28:41</td>
+    </tr>
+    <tr>
+      <td class="id">d4d217bd…</td>
+      <td class="text">. [](https://github.com/meilisearch)[](https://twitter.com/intent/tweet?url=https://meilisearch.com/blog/adaptive-rag&text=@meilisearch%20Adaptive%20RAG%20explained:%20What%20to%20know%20in%202026)[](https://www.linkedin.com/shareArticle?mini=true&url=https://meilisearch.com/blog/adaptive-rag&text=A…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:18</td>
+    </tr>
+    <tr>
+      <td class="id">29581a04…</td>
+      <td class="text">. Implementing adaptive RAG involves training a query classifier to understand the query type, setting up routing logic to decide the answering strategy, and generating the response. Adaptive RAG is a smarter version of [Retrieval-Augmented Generation](https://www.meilisearch.com/blog/what-is-rag). …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:19</td>
+    </tr>
+    <tr>
+      <td class="id">4f558b0c…</td>
+      <td class="text">. Adaptive RAG and standard RAG are two different [RAG types](https://www.meilisearch.com/blog/rag-types) that can be used in different scenarios. It works well for [building adaptive RAG](https://www.meilisearch.com/blog/how-to-build-rag) prototypes, especially when you want to fine-tune retrieval …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:21</td>
+    </tr>
+    <tr>
+      <td class="id">6102cf60…</td>
+      <td class="text">. [Retrieval-Augmented Generation (RAG) for business: Full guide -------------------------------------------------------------](https://www.meilisearch.com/blog/rag-for-business).', 'score': 0.9999263, 'raw_content': None}, {'url': 'https://medium.com/@sumakbn/adaptive-rag-elevating-query-handling-w…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:22</td>
+    </tr>
+    <tr>
+      <td class="id">25f1f4eb…</td>
+      <td class="text">. Hence, we can see that our Adaptive RAG is working very well utilizing its self reflection capabilities to reason about the relevancy of output generated by LLM, Also utilizing the web search tool when retrieved documents are not that good.', 'score': 0.9998273, 'raw_content': None}, {'url': 'http…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:28</td>
+    </tr>
+    <tr>
+      <td class="id">faba7baa…</td>
+      <td class="text">. His research interests include large language models, model optimization, and the efficient deployment of AI systems. Jun Wang’s main research interests are in the areas of AI and intelligent systems, including (multiagent) reinforcement learning, deep generative models, and their diverse applicat…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:30</td>
+    </tr>
+    <tr>
+      <td class="id">acb97399…</td>
+      <td class="text">. While UE methods make a single, upfront decision on whether retrieval is necessary for a given question, ARAG methods dynamically interleave the generation and decision-making. With this framework in mind, let’s examine a few methods that are arguably the most efficient ARAG approaches, as they de…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:05:33</td>
+    </tr>
+    <tr>
+      <td class="id">cbce9681…</td>
+      <td class="text">. Implementing adaptive RAG involves training a query classifier to understand the query type, setting up routing logic to decide the answering strategy, and generating the response. Adaptive RAG is a smarter version of [Retrieval-Augmented Generation](https://www.meilisearch.com/blog/what-is-rag). …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:07:23</td>
+    </tr>
+    <tr>
+      <td class="id">01f6348a…</td>
+      <td class="text">. [Retrieval-Augmented Generation (RAG) for business: Full guide -------------------------------------------------------------](https://www.meilisearch.com/blog/rag-for-business).', 'score': 0.9999263, 'raw_content': None}, {'url': 'https://medium.com/@sumakbn/adaptive-rag-elevating-query-handling-w…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:07:26</td>
+    </tr>
+    <tr>
+      <td class="id">86712817…</td>
+      <td class="text">. Hence, we can see that our Adaptive RAG is working very well utilizing its self reflection capabilities to reason about the relevancy of output generated by LLM, Also utilizing the web search tool when retrieved documents are not that good.', 'score': 0.9998273, 'raw_content': None}, {'url': 'http…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:07:31</td>
+    </tr>
+    <tr>
+      <td class="id">b8ddc0ba…</td>
+      <td class="text">. His research interests include large language models, model optimization, and the efficient deployment of AI systems. Jun Wang’s main research interests are in the areas of AI and intelligent systems, including (multiagent) reinforcement learning, deep generative models, and their diverse applicat…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:07:35</td>
+    </tr>
+    <tr>
+      <td class="id">4ebb9c9c…</td>
+      <td class="text">. While UE methods make a single, upfront decision on whether retrieval is necessary for a given question, ARAG methods dynamically interleave the generation and decision-making. With this framework in mind, let’s examine a few methods that are arguably the most efficient ARAG approaches, as they de…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">Explain adaptive retrieval in RAG systems</td>
+      <td class="meta">2026-03-22T06:07:37</td>
+    </tr>
+    <tr>
+      <td class="id">1c40bd53…</td>
+      <td class="text">. India at the Cricket World Cup. Tournament logo.', 'score': 0.9950177, 'raw_content': None}, {'url': 'https://www.youtube.com/watch?v=orFdTTBWG68', 'title': 'Historic Win! India Retains World Cup Crown With 96 Run Victory ...', 'content': 'Historic Win! India Retains World Cup Crown With 96 Run Vi…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India cricket won</td>
+      <td class="meta">2026-03-22T06:11:27</td>
+    </tr>
+    <tr>
+      <td class="id">3762359a…</td>
+      <td class="text">#IndiaNews #EnglishNews\nInstagram: https://www.instagram.com/newsxonline/ \nFacebook: https://www.facebook.com/Newsxonline\nTwitter: https://twitter.com/NewsX\n\n', 'score': 0.98469365, 'raw_content': None}, {'url': 'https://www.bbc.com/sport/cricket/articles/ckgyzryk116o', 'title': 'India edge out…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India cricket won</td>
+      <td class="meta">2026-03-22T06:11:30</td>
+    </tr>
+    <tr>
+      <td class="id">5f321aa0…</td>
+      <td class="text">{'query': 'I want to know about m,en and wemen both ICC', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.youtube.com/watch?v=-9yfeojP1kk', 'title': 'ICC Announces Equal Prize Money for Men and Women - YouTube', 'content': "ICC Announces Equal Prize Money …</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">I want to know about m,en and wemen both ICC</td>
+      <td class="meta">2026-03-22T06:12:55</td>
+    </tr>
+    <tr>
+      <td class="id">045e5f50…</td>
+      <td class="text">. ICC Elections and Women”. At the outset, I would like to thank the ... Recent statistics show that we, in the international community, have not done well.', 'score': 0.97702265, 'raw_content': None}, {'url': 'https://coalitionfortheicc.org/sites/default/files/cicc_documents/CICC%20Elections%20Team…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">I want to know about m,en and wemen both ICC</td>
+      <td class="meta">2026-03-22T06:12:59</td>
+    </tr>
+    <tr>
+      <td class="id">8e9ce1ce…</td>
+      <td class="text">{'query': 'India vs Australia 2024 Test series results', 'follow_up_questions': None, 'answer': None, 'images': [], 'results': [{'url': 'https://www.cricbuzz.com/cricket-series/7745/india-tour-of-australia-2024-25/matches', 'title': 'India tour of Australia, 2024-25 schedule, live scores and results…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India vs Australia 2024 Test series results</td>
+      <td class="meta">2026-03-22T06:19:53</td>
+    </tr>
+    <tr>
+      <td class="id">b4f2eea7…</td>
+      <td class="text">. - ESPN', 'content': 'Result. 5th Test, at Sydney. AustraliaAUS. 181 & 162/4 (27 ov, target 162). IndiaIND. 185 & 157 · Result. 4th Test, at Melbourne. AustraliaAUS. 474 & 234. India', 'score': 0.8785752, 'raw_content': None}, {'url': 'https://www.espncricinfo.com/records/year/team-match-results/20…</td>
+      <td><span class="badge" style="background:#059669">web_search_credible</span></td>
+      <td class="meta">India vs Australia 2024 Test series results</td>
+      <td class="meta">2026-03-22T06:19:56</td>
+    </tr>
+    <tr>
+      <td class="id">de4770b2…</td>
+      <td class="text">Simple test string…</td>
+      <td><span class="badge" style="background:#7c3aed">manual_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:03:58</td>
+    </tr>
+    <tr>
+      <td class="id">2ce86ce1…</td>
+      <td class="text">This is a test PDF document for Agentic RAG.…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:04:07</td>
+    </tr>
+    <tr>
+      <td class="id">ebb9e3d8…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+1/27
+Gourab Dutta
+Test ID:
+ 450014908000139
+8116753703
+duttagourab163@gmail.com
+Test Date: October 18, 2025
+Computer Science
+72
+/100
+Logical Ability
+51
+/100
+Computer Programming
+76
+/100
+Internet of Things
+83
+/100
+Quantitative Ability
+(Advanced)…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:53</td>
+    </tr>
+    <tr>
+      <td class="id">682fadcd…</td>
+      <td class="text">73
+/ 100
+79
+/ 100
+76
+/ 100
+Quantitative Ability (Advanced)
+
+ 58
+/ 100
+Basic Mathematics
+
+Advanced Mathematics
+
+Applied Mathematics
+
+61
+/ 100
+57
+/ 100
+57
+/ 100
+English Comprehension
+
+CEFR:
+ B2
+58
+/ 100
+Grammar
+
+Vocabulary
+
+Comprehension
+
+51
+/ 100
+65
+/ 100
+59
+/ 100
+Machine Learning
+
+ 67
+/ 100
+Data Ana…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:53</td>
+    </tr>
+    <tr>
+      <td class="id">285e50db…</td>
+      <td class="text">100
+
+80
+
+60
+
+40
+
+20
+
+0
+Extraversion
+Conscientiousness
+Agreeableness
+Openness
+to
+Experience
+Emotional
+Stability
+Polychronicity
+56
+81
+88
+48
+84
+53…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:53</td>
+    </tr>
+    <tr>
+      <td class="id">64e7d6b2…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+4/27
+1 Introduction
+About the Report
+This report provides a detailed analysis of the candidate's performance on different assessments. The tests for this
+job role were decided based on job analysis, O*Net taxonomy mapping and/or criterion valid…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:53</td>
+    </tr>
+    <tr>
+      <td class="id">7de1a78d…</td>
+      <td class="text">feedback includes the competency definitions, the topics covered in the test, and a note on the level of the
+candidate’s performance.
+The Response section captures the response provided by the candidate. This section includes only those tests that
+require a subjective input from the candidate and ar…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:53</td>
+    </tr>
+    <tr>
+      <td class="id">1ad1912c…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+5/27
+2 Insights
+English Comprehension
+
+CEFR:
+ B2
+This test aims to measure your vocabulary, grammar and reading comprehension skills.
+You are able to construct short sentences and understand simple text. The ability to read and comprehend is
+im…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">ce9378b1…</td>
+      <td class="text">Inductive Reasoning
+This competency aims to measure the your ability to synthesize information and derive conclusions.
+You are able to work out simple rules based on specific evidence or information. This skill is required in
+high end analytics jobs where one is required to infer patterns based on p…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">fa74d53b…</td>
+      <td class="text">This test aims to measure your ability to solve problems on basic arithmetic operations, probability, permutations and
+combinations, and other advanced concepts.
+You are able to solve word problems on basic concepts of percentages, ratio, proportion, interest, time and work.
+Having a strong hold on …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">bd01f9b0…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+6/27
+Personality
+Competencies
+Extraversion
+Extraversion refers to a person's inclination to prefer social interaction over spending time alone.
+Individuals with high levels of extraversion are perceived to be outgoing, warm and socially confide…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">c4e26146…</td>
+      <td class="text">well.
+• Your personality may be suitable for jobs demanding flexibility in terms of working well with a
+team as well as individually.
+Conscientiousness
+Conscientiousness is the tendency to be organized, hard working and responsible in one's approach to
+your work. Individuals with high levels of this…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">65dcd70f…</td>
+      <td class="text">• You generally set and work toward goals, try to exceed expectations and are likely to excel in
+most jobs, especially those which require careful or meticulous approach.
+56
+Reserved
+Sociable
+81
+Spontaneous
+Diligent…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">f00a67f5…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+7/27
+Agreeableness
+Agreeableness refers to an individual's tendency to be cooperative with others and it defines your
+approach to interpersonal relationships. People with high levels of this personality trait tend to be
+more considerate of peop…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">3ec42f6b…</td>
+      <td class="text">Openness to Experience
+Openness to experience refers to a person's inclination to explore beyond conventional boundaries in
+different aspects of life. Individuals with high levels of this personality trait tend to be more curious,
+creative and innovative in nature.
+• You may try new things but would…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">31a584fa…</td>
+      <td class="text">composed when working through challenging situations. People with high levels of this personality trait
+tend to be more in control of their emotions and are likely to perform consistently despite difficult or
+unfavourable conditions.
+• You are calm and composed in nature.
+• You tend to maintain comp…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">cdc68d6d…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+8/27
+Polychronicity
+Polychronicity refers to a person's inclination to multitask. It is the extent to which the person prefers
+to engage in more than one task at a time and believes that such an approach is highly productive.
+While this trait d…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">cea83b0a…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+9/27
+3 Response
+Question 1 (Language: Java)
+The function/method findMaxElement accepts four arguments - len1, arr1, len2 and arr2, an integer representing the
+length of the first list, first list of integers, an integer representing the length …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">a10710da…</td>
+      <td class="text">cases.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+Code Analysis
+Average-case Time Complexity
+Candidate code: Complexity is reported only when the code
+is correct and it passes all the basic and advanced test
+cases.
+Best case code:
+*N represents
+Errors/Warnings
+There are no err…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:54</td>
+    </tr>
+    <tr>
+      <td class="id">9c541665…</td>
+      <td class="text">Code Replay
+43
+/ 100
+Scores
+Final Code Submitted
+Compilation Status: Pass
+// You can print the values to stdout for debugging
+class Solution
+{
+   public int[] sortArray(int len, int[] arr)
+   {
+       int i=0,j=0,temp=0;
+       for(i=0;i&lt;arr.length;i++)
+       {
+           for(j=i+1;j&lt;arr.leng…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">0194647a…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+10/27
+26
+27
+28
+29
+30
+31
+32
+33
+Test Case Execution
+Passed TC: 100%
+Total score
+ 8/8
+100%
+Basic(2/2)
+100%
+Advance(6/6)
+0%
+Edge(0/0)
+Compilation Statistics
+2
+Total attempts
+2
+Successful
+0
+Compilation errors
+0
+Sample failed
+0
+Timed out
+0
+Runtime er…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">d5b462f2…</td>
+      <td class="text">sizes to the given code. It has been benchmarked across problems.
+Test Case Execution
+There are three types of test-cases for every coding problem:
+Basic: The basic test-cases demonstrate the primary logic of the problem. They include the most common and obvious cases that an
+average candidate would…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">2807a92e…</td>
+      <td class="text">int [] sortedArr2 = sortArray(len2, arr2);
+       int maxEle1 = sortedArr1[arr1.length-1];
+       int maxEle2 = sortedArr2[arr2.length-1];
+       return Math.max(maxEle1, maxEle2);
+   }
+}…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">3f1856c7…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+11/27
+Question 2 (Language: Java)
+The function/method printCharacterPattern accepts an integer num. It is supposed to print the first num (0 ≤ num ≤
+26 ) lines of the pattern as shown below.
+For example, if num = 4, the pattern is:
+a
+ab
+abc
+abc…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">08f75eb2…</td>
+      <td class="text">There are no errors in the candidate's code.
+Test Case Execution
+Passed TC: 100%
+Total score
+ 8/8
+100%
+Basic(3/3)
+100%
+Advance(4/4)
+100%
+Edge(1/1)
+Scores
+Final Code Submitted
+Compilation Status: Pass
+// You can print the values to stdout for debugging
+class Solution{
+ public void printCharacterPatte…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">1852f325…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+12/27
+Compilation Statistics
+7
+Total attempts
+4
+Successful
+3
+Compilation errors
+3
+Sample failed
+0
+Timed out
+0
+Runtime errors
+Response time:
+00:05:26
+Average time taken between two compile attempts:
+00:00:47
+Average test case pass percentage per…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">36a13024…</td>
+      <td class="text">There are three types of test-cases for every coding problem:
+Basic: The basic test-cases demonstrate the primary logic of the problem. They include the most common and obvious cases that an
+average candidate would consider while coding. They do not include those cases that need extra checks to be p…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">799d20d6…</td>
+      <td class="text">Question 3 (Language: Java)
+The function/method removeElement prints space separated integers that remains after removing the integer at the
+given index from the input list. 
+The function/method removeElement accepts three arguments - size, an integer representing the size of the input list,
+indexVa…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">90dd1808…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+13/27
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+Code Analysis
+Average-case Time Complexity
+Candidate code: Complexity is reported only when the code
+is correct and it passes all the basic and advanced test
+cases.
+Best case code:
+…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">af13f184…</td>
+      <td class="text">0%
+Scores
+Final Code Submitted
+Compilation Status: Pass
+// You can print the values to stdout for debugging
+class Solution
+{
+   void removeElement(int size, int indexValue, int[] inputList)
+   {
+       int i , j;
+       if( indexValue &lt; size )
+       {
+           for( i = indexValue ; i &lt; size…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">ae0824ab…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+14/27
+Average-case Time Complexity
+Average Case Time Complexity is the order of performance of the algorithm given a random set of inputs. This complexity is measured
+here using the Big-O asymptotic notation. This is the complexity detected by …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">4206ca3f…</td>
+      <td class="text">Advanced: The advanced test-cases contain pathological input conditions that would attempt to break the codes which have
+incorrect/semi-correct implementations of the correct logic or incorrect/semi-correct formulation of the logic.
+Edge: The edge test-cases specifically confirm whether the code run…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:55</td>
+    </tr>
+    <tr>
+      <td class="id">8f12046e…</td>
+      <td class="text">checks on logging.
+Developers at XYZ Technologies already use a predefined structure Time containing hour, minute, and second as
+members. A collection of functions/methods for performing some common operations on times is also available. You
+must make use of these functions/methods to calculate and …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">9bf30f3e…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+15/27
+7
+8
+9
+10
+11
+12
+13
+Best case code:
+*N represents
+Errors/Warnings
+There are no errors in the candidate's code.
+Structural Vulnerabilites and Errors
+There are no errors in the candidate's code.
+Test Case Execution
+Passed TC: 100%
+Total score…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">66e96b5f…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+16/27
+Average-case Time Complexity
+Average Case Time Complexity is the order of performance of the algorithm given a random set of inputs. This complexity is measured
+here using the Big-O asymptotic notation. This is the complexity detected by …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">5e3162b7…</td>
+      <td class="text">Advanced: The advanced test-cases contain pathological input conditions that would attempt to break the codes which have
+incorrect/semi-correct implementations of the correct logic or incorrect/semi-correct formulation of the logic.
+Edge: The edge test-cases specifically confirm whether the code run…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">f21dd6fe…</td>
+      <td class="text">The function/method compiles unsuccessfully due to syntactical error. Your task is to fix the code so that it passes all
+the test cases.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+Code Analysis
+Average-case Time Complexity
+Candidate code: Complexity is reported only when the code
+is correct and it passes a…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">904da23c…</td>
+      <td class="text">Solution.java:6: error: ';' expected
+int i,cou-nt=0;
+Scores
+Final Code Submitted
+Compilation Status: Fail
+// You can print the values to stdout for debugging
+class Solution
+{
+   int countElement(int size, int numK, int[] inputList)
+   {
+       int i,cou-nt=0;
+       for(i=0,i&lt;size,i++)
+       {
+ …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">268e53df…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+17/27
+16
+^
+Solution.java:7: error: not a statement
+for(i=0,i ^
+Solution.java:7: error: ';' expected
+for(i=0,i ^
+Solution.java:7: error: ';' expected
+for(i=0,i ^
+Solution.java:9: error: illegal start of expression
+if(inputList[i]&gt;2numK)
+^
+Sol…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">ae58c654…</td>
+      <td class="text">}
+^
+13 errors
+Structural Vulnerabilites and Errors
+There are no errors in the candidate's code.
+Compilation Statistics
+0
+Total attempts
+0
+Successful
+0
+Compilation errors
+0
+Sample failed
+0
+Timed out
+0
+Runtime errors
+Response time:
+00:00:00
+Average time taken between two compile attempts:
+00:00:00
+Ave…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">5a923268…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+18/27
+Average-case Time Complexity
+Average Case Time Complexity is the order of performance of the algorithm given a random set of inputs. This complexity is measured
+here using the Big-O asymptotic notation. This is the complexity detected by …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">1be6440a…</td>
+      <td class="text">Advanced: The advanced test-cases contain pathological input conditions that would attempt to break the codes which have
+incorrect/semi-correct implementations of the correct logic or incorrect/semi-correct formulation of the logic.
+Edge: The edge test-cases specifically confirm whether the code run…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">4c296c71…</td>
+      <td class="text">20}.
+The function/method compiles successfully but fails to print the desired result for some test cases due to logical errors.
+Your task is to fix the code so that it passes all the test cases.
+The candidate did not make any changes in the code.
+Scores…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">d561cbcc…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+19/27
+Compilation Statistics
+0
+Total attempts
+0
+Successful
+0
+Compilation errors
+0
+Sample failed
+0
+Timed out
+0
+Runtime errors
+Response time:
+00:00:00
+Average time taken between two compile attempts:
+00:00:00
+Average test case pass percentage per…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:56</td>
+    </tr>
+    <tr>
+      <td class="id">1a292f42…</td>
+      <td class="text">There are three types of test-cases for every coding problem:
+Basic: The basic test-cases demonstrate the primary logic of the problem. They include the most common and obvious cases that an
+average candidate would consider while coding. They do not include those cases that need extra checks to be p…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">979786ec…</td>
+      <td class="text">The function/method countDigits accepts an integer num. It is supposed to return the remainder when the input
+integer num (0 &lt; num) is divided by the number of digits in num.
+The function/method compiles successfully but fails to print the desired result for some test cases due to logical errors.…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">cf3d1c5f…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+20/27
+Compilation Statistics
+0
+Total attempts
+0
+Successful
+0
+Compilation errors
+0
+Sample failed
+0
+Timed out
+0
+Runtime errors
+Response time:
+00:00:00
+Average time taken between two compile attempts:
+00:00:00
+Average test case pass percentage per…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">93c4077e…</td>
+      <td class="text">There are three types of test-cases for every coding problem:
+Basic: The basic test-cases demonstrate the primary logic of the problem. They include the most common and obvious cases that an
+average candidate would consider while coding. They do not include those cases that need extra checks to be p…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">ea86a3a4…</td>
+      <td class="text">Question 1 (Language: Java)
+High similarity detected :
+99%
+A company wants to provide a cab service for their N employees. The employees have IDs ranging from 0 to N-1. The
+company has calculated the total distance from an employee's residence to the company, considering the path to be
+followed by t…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">d95d9fcc…</td>
+      <td class="text">Code Replay
+92
+/ 100
+
+© 2026 SHL and/or its affiliates. All rights reserved..
+21/27
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+Code Analysis
+Average-case Time Complexity
+Candidate code: Complexity is reported only when the code
+is correct and it passes all th…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">08196fb1…</td>
+      <td class="text">Correct basic functionality with partially correct advanced
+functionality. Passes all the basic test cases in the test suite and a
+percentage of the advanced test cases.
+74 / 100
+Final Code Submitted
+Compilation Status: Pass
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+/*
+*
+*/
+public cl…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">d5ab6432…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+22/27
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+Test Case Execution
+Passed TC: 91.67%
+Total score
+ 11/12
+100%
+Basic(6/6)
+83%
+Advance(5/6)
+0%
+Edge(0/0)
+Compilation Statistics
+13
+Total attempts
+9
+Successf…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">8db3d2ab…</td>
+      <td class="text">{
+           inputDist[idx] = in.nextInt();
+       }
+       // input for start
+       int start = in.nextInt();
+       // input for end
+       int end = in.nextInt();
+       int[] result = funcDistance(inputDist, start, end);
+       for(int idx = 0; idx &lt; result.length - 1; idx++)
+       {
+      …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">d5e5baf9…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+23/27
+Every response is checked against:
+The responses of peers who took this assessment in the same event
+All candidate responses submitted in the last week
+Content currently available on the web
+This response has a high degree of similarity t…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">8bdeedc0…</td>
+      <td class="text">{ 
+16
+           if(inputDist[i]&gt;=start&&inputDist[i]&lt;=end){
+17
+               answer[count++] = inputDist[i]; 
+17
+               answer[index++]=inputDist[i];
+18
+           } 
+18
+           } 
+19
+       } 
+19
+       } 
+20
+ 
+20
+       if(index==0){
+21
+       if(count == 0){ 
+21
+           answ…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">7b13afb3…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+24/27
+Average-case Time Complexity
+Average Case Time Complexity is the order of performance of the algorithm given a random set of inputs. This complexity is measured
+here using the Big-O asymptotic notation. This is the complexity detected by …</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">a72ed684…</td>
+      <td class="text">Advanced: The advanced test-cases contain pathological input conditions that would attempt to break the codes which have
+incorrect/semi-correct implementations of the correct logic or incorrect/semi-correct formulation of the logic.
+Edge: The edge test-cases specifically confirm whether the code run…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:57</td>
+    </tr>
+    <tr>
+      <td class="id">f4f516e2…</td>
+      <td class="text">whereas a positive registration number denotes that the car is a newly registered car. Before the game starts, the
+system automatically assigns a track number to each car. The track number is the smallest permutation of the car
+registration number and never starts with zero.
+Write an algorithm to ge…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">c136c5e0…</td>
+      <td class="text">Completely correct. A correct implementation of the problem
+using the right control-structures and data dependencies.
+100 / 100
+Programming Practices
+
+
+High readability, high on program structure. The source code is
+readable and does not consist of any significant
+redundant/improper coding construct…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">69fc3200…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+25/27
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+Code Analysis
+Average-case Time Complexity
+Candidate code: O(N)
+Best case code:
+*N represents length of…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">47e9ab98…</td>
+      <td class="text">boolean isNegative = num&lt;0;
+       int t = Math.abs(num);
+       char[] digits = String.valueOf(t).toCharArray();
+       Arrays.sort(digits);
+       if(isNegative){
+           for(int i=0, j=digits.length-1; i&lt;j; i++, j--){
+               char tmp = digits[i];
+               digits[i] = digits…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">d199bccf…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+26/27
+49
+50
+51
+52
+53
+54
+55
+56
+57
+Test Case Execution
+Passed TC: 100%
+Total score
+ 10/10
+100%
+Basic(4/4)
+100%
+Advance(4/4)
+100%
+Edge(2/2)
+Compilation Statistics
+2
+Total attempts
+2
+Successful
+0
+Compilation errors
+0
+Sample failed
+0
+Timed out
+0
+Run…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">8e748ed2…</td>
+      <td class="text">sizes to the given code. It has been benchmarked across problems.
+Test Case Execution
+There are three types of test-cases for every coding problem:
+Basic: The basic test-cases demonstrate the primary logic of the problem. They include the most common and obvious cases that an
+average candidate would…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr>
+    <tr>
+      <td class="id">0e023545…</td>
+      <td class="text">© 2026 SHL and/or its affiliates. All rights reserved..
+27/27
+4 Learning Resources
+English Comprehension
+Learn about written english comprehension
+
+
+Learn about spoken english comprehension
+
+
+Test your comprehension skills
+
+
+Logical Ability
+Practice your Inductive Reasoning Skills!
+
+
+Learn about gen…</td>
+      <td><span class="badge" style="background:#7c3aed">pdf_upload</span></td>
+      <td class="meta">—</td>
+      <td class="meta">2026-03-22T07:05:58</td>
+    </tr></tbody>
+  </table>
+</body>
+</html>

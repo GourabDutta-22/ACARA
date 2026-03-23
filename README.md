@@ -1,3 +1,12 @@
+# ACARA - Adaptive Context-Aware Retrieval Agent
+
+This project implements an **Adaptive Context-Aware Retrieval Architecture (ACARA)**, featuring a self-optimizing RAG pipeline with dynamic retrieval controls.
+
+## 🏛 Architecture
+For a detailed breakdown of the system flow and components, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+---
+
 # How to Contribute to This Repository
 
 ## Step 1: Clone the Repository (First Time Only)
