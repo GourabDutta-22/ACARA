@@ -16,7 +16,7 @@ graph TD
     end
 
     subgraph Adaptive Retrieval Controller
-        ARC[Adaptive Retrieval Controller - ARC]
+        ARC[Adaptive Retrieval Controller]
         ARC -.->|similarity_threshold| CAG
         ARC -.->|top_k| VM
         ARC -.->|chunk_size / overlap| DCM
@@ -28,7 +28,7 @@ graph TD
     end
 
     subgraph Dynamic Routing
-        Fresh -->|STALENESS / WEAK| EKS[External Knowledge Source - Tavily]
+        Fresh -->|STALENESS / WEAK| EKS[External Knowledge Source]
         CAG -->|LOW SIMILARITY| EKS
         Cov -->|LOW COVERAGE| EKS
         
@@ -38,12 +38,12 @@ graph TD
     subgraph Knowledge Processing
         EKS --> DCM[Dynamic Chunking Module]
         DCM --> Cred{Credibility Scoring}
-        Cred -->|Validated| MU[Memory Update - Vector Store]
+        Cred -->|Validated| MU[(Memory Update)]
         Cred --> CB
     end
 
     subgraph LLM Synthesis
-        CB --> GEN[Generator Model - GPT-4o-mini]
+        CB --> GEN[Generator Model]
         GEN --> VAL{Critic / Validator}
         VAL -->|Hallucination Warn| FO[Final Output]
         VAL -->|Clean| FO
