@@ -1,75 +1,51 @@
-# ACARA Project Architecture & Flow
-
-This document details the **Adaptive Context-Aware Retrieval Architecture (ACARA)** flow.
-
-## 🛠 System Flow Diagram
+# Agentic RAG Architecture
 
 ```mermaid
 graph TD
-    subgraph User Interaction
-        User[User Query] --> QE[Query Encoder]
+    subgraph UI ["User Interaction"]
+        User["User<br/>Query"] --> QE["Query<br/>Encoder"]
     end
 
-    subgraph Memory & Retrieval
-        QE --> VM[(Vector Memory)]
-        VM --> CAG{Context Awareness Gate}
+    subgraph MR ["Memory & Retrieval"]
+        QE --> VM[("Vector<br/>Memory")]
+        VM --> CAG{"Context<br/>Awareness<br/>Gate"}
     end
 
-    subgraph Adaptive Retrieval Controller
-        ARC[Adaptive Retrieval Controller]
-        ARC -.->|similarity_threshold| CAG
-        ARC -.->|top_k| VM
-        ARC -.->|chunk_size / overlap| DCM
+    subgraph ARC_Sub ["Adaptive Retrieval Controller"]
+        ARC["Adaptive<br/>Retrieval<br/>Controller"]
+        ARC -.->|"similarity<br/>threshold"| CAG
+        ARC -.->|"top_k"| VM
+        ARC -.->|"chunk_size /<br/>overlap"| DCM
     end
 
-    subgraph Gating Logic
-        CAG -->|Similarity Pass| Cov{Coverage Check}
-        Cov -->|LLM Verified| Fresh{Freshness Check}
+    subgraph GL ["Gating Logic"]
+        CAG -->|"Similarity<br/>Pass"| Cov{"Coverage<br/>Check"}
+        Cov -->|"LLM<br/>Verified"| Fresh{"Freshness<br/>Check"}
     end
 
-    subgraph Dynamic Routing
-        Fresh -->|STALENESS / WEAK| EKS[External Knowledge Source]
-        CAG -->|LOW SIMILARITY| EKS
-        Cov -->|LOW COVERAGE| EKS
+    subgraph DR ["Dynamic Routing"]
+        Fresh -->|"STALENESS /<br/>WEAK"| EKS["External<br/>Knowledge<br/>Source"]
+        CAG -->|"LOW<br/>SIMILARITY"| EKS
+        Cov -->|"LOW<br/>COVERAGE"| EKS
         
-        Fresh -->|STRONG| CB[Context Builder]
+        Fresh -->|"STRONG"| CB["Context<br/>Builder"]
     end
 
-    subgraph Knowledge Processing
-        EKS --> DCM[Dynamic Chunking Module]
-        DCM --> Cred{Credibility Scoring}
-        Cred -->|Validated| MU[(Memory Update)]
+    subgraph KP ["Knowledge Processing"]
+        EKS --> DCM["Dynamic<br/>Chunking<br/>Module"]
+        DCM --> Cred{"Credibility<br/>Scoring"}
+        Cred -->|"Validated"| MU[("Memory<br/>Update")]
         Cred --> CB
     end
 
-    subgraph LLM Synthesis
-        CB --> GEN[Generator Model]
-        GEN --> VAL{Critic / Validator}
-        VAL -->|Hallucination Warn| FO[Final Output]
-        VAL -->|Clean| FO
+    subgraph LS ["LLM Synthesis"]
+        CB --> GEN["Generator<br/>Model"]
+        GEN --> VAL{"Critic /<br/>Validator"}
+        VAL -->|"Hallucination<br/>Warn"| FO["Final<br/>Output"]
+        VAL -->|"Clean"| FO
     end
 
     %% Feedback loop
-    CAG -.->|WEAK Signal| ARC
-    CAG -.->|STRONG Signal| ARC
+    CAG -.->|"WEAK<br/>Signal"| ARC
+    CAG -.->|"STRONG<br/>Signal"| ARC
 ```
-
-## 🧩 Core Components
-
-### 1. ARC (Adaptive Retrieval Controller)
-The "brain" of the architecture. It dynamically adjusts retrieval parameters (threshold, top_k, chunking) based on pipeline feedback signals.
-
-### 2. Context Awareness Gate
-A multi-dimensional filter that evaluates retrieved chunks for:
-- **Similarity**: Vector distance against dynamic ARC threshold.
-- **Coverage**: Semantic relevance determined by structured LLM grading.
-- **Freshness**: Date-based filtering to avoid stale information.
-
-### 3. Dynamic Chunking Module
-Adjusts chunk size and overlap based on query complexity, ensuring optimal retrieval for both short and long queries.
-
-### 4. Credibility Scoring
-Validates external knowledge before it is used for generation or stored in long-term memory.
-
-### 5. Critic / Validator
-A final verification stage that flags hallucinations or unsupported claims before the user sees the output.
