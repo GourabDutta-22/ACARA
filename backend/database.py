@@ -3,8 +3,12 @@ import chromadb
 from datetime import datetime, timezone
 from motor.motor_asyncio import AsyncIOMotorClient
 from langchain_openai import OpenAIEmbeddings
+from dotenv import load_dotenv
 
-# MongoDB Setup
+# Ensure env vars are loaded before any config is read
+load_dotenv()
+
+# MongoDB Setup — read URI after dotenv is loaded
 MONGO_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(MONGO_URI)
 db = client.agentic_rag
@@ -20,7 +24,18 @@ USE_PINECONE = bool(PINECONE_KEY and PINECONE_KEY != "your_pinecone_api_key_here
 # Lazy-loaded resources (don't connect at import time!)
 _pinecone_index = None
 _chroma_collection = None
-embeddings_model = OpenAIEmbeddings(model="text-embedding-3-small")
+_embeddings_model = None  # lazy — instantiated on first use, not at import
+
+
+def get_embeddings_model() -> OpenAIEmbeddings:
+    """Return the embeddings model, initializing it lazily on first call."""
+    global _embeddings_model
+    if _embeddings_model is None:
+        _embeddings_model = OpenAIEmbeddings(model="text-embedding-3-small")
+    return _embeddings_model
+
+
+
 
 
 def _get_vector_store():
@@ -31,17 +46,17 @@ def _get_vector_store():
         if _pinecone_index is None:
             from pinecone import Pinecone, ServerlessSpec
             pc = Pinecone(api_key=PINECONE_KEY)
-            
+
             # Check if index exists, create if missing
             if PINECONE_INDEX_NAME not in pc.list_indexes().names():
                 print(f"🌲 Creating Pinecone Index: {PINECONE_INDEX_NAME}...")
                 pc.create_index(
                     name=PINECONE_INDEX_NAME,
-                    dimension=1536, # OpenAI text-embedding-3-small
+                    dimension=1536,  # OpenAI text-embedding-3-small
                     metric="cosine",
                     spec=ServerlessSpec(cloud="aws", region="us-east-1")
                 )
-            
+
             _pinecone_index = pc.Index(PINECONE_INDEX_NAME)
             print(f"🌲 Connected to Pinecone Cloud Index: {PINECONE_INDEX_NAME}")
         return _pinecone_index
@@ -65,7 +80,7 @@ def add_document_to_vector_store(doc_id: str, text: str, metadata: dict = None):
     store = _get_vector_store()
 
     if USE_PINECONE:
-        emb = embeddings_model.embed_query(text)
+        emb = get_embeddings_model().embed_query(text)
         store.upsert(vectors=[{"id": doc_id, "values": emb, "metadata": base_meta}])
     else:
         store.upsert(documents=[text], ids=[doc_id], metadatas=[base_meta])
@@ -76,7 +91,7 @@ def search_vector_store(query_text: str, n_results: int = 3, embedding: list = N
     store = _get_vector_store()
 
     if USE_PINECONE:
-        query_emb = embedding or embeddings_model.embed_query(query_text)
+        query_emb = embedding or get_embeddings_model().embed_query(query_text)
         results = store.query(vector=query_emb, top_k=n_results, include_metadata=True)
         docs  = [m.metadata.get("text", "") for m in results.matches]
         metas = [m.metadata for m in results.matches]

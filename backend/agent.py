@@ -1,6 +1,6 @@
 """
-Adaptive Context-Aware Retrieval Agent (LangGraph)
-===================================================
+Adaptive Context-Aware Retrieval Agent (LangChain LCEL)
+========================================================
 Flow Diagram components implemented here:
 
   User Query → Query Encoder → Vector Memory
@@ -17,6 +17,9 @@ Flow Diagram components implemented here:
     Credibility Scoring → Memory Update   ←   Final Output
                                  ↑
                   Adaptive Retrieval Controller (ARC)
+
+Orchestration: Pure LangChain LCEL (RunnableSequence + RunnableBranch).
+LangGraph is NOT used here — it is only used in visualize_3d.py.
 """
 
 import os
@@ -24,21 +27,22 @@ import uuid
 import asyncio
 from datetime import datetime, timezone, timedelta
 from typing import TypedDict, Annotated, Sequence, Optional, List
+
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from langgraph.graph import StateGraph, END
+from langchain_core.runnables import RunnableLambda, RunnableBranch
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from pydantic import BaseModel, Field
 from langchain_core.prompts import PromptTemplate
 from langchain_tavily import TavilySearch
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from database import search_vector_store, add_document_to_vector_store, USE_PINECONE, embeddings_model
+from database import search_vector_store, add_document_to_vector_store, USE_PINECONE, get_embeddings_model
 from arc import arc
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Agent State
+# Agent State (plain dict — passed through the LCEL chain)
 # ─────────────────────────────────────────────────────────────────────────────
 class AgentState(TypedDict):
     messages: Sequence[BaseMessage]
@@ -65,6 +69,13 @@ structured_llm = llm.with_structured_output(Scorer)
 search_tool = TavilySearch(max_results=5)
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Session Memory (replaces LangGraph MemorySaver)
+# Keyed by session_id → list of BaseMessage
+# ─────────────────────────────────────────────────────────────────────────────
+_session_memory: dict[str, list[BaseMessage]] = {}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # SSE Event Queue (module-level so main.py can subscribe)
 # ─────────────────────────────────────────────────────────────────────────────
 _event_queues: dict[str, asyncio.Queue] = {}
@@ -84,34 +95,81 @@ def emit_event(session_id: str, step: str, detail: str = ""):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# LCEL State-Merge Helper
+# Each node returns a partial dict; this helper merges it into the full state
+# so the next node in the chain receives a complete AgentState dict.
+# ─────────────────────────────────────────────────────────────────────────────
+def _wrap_node(fn):
+    """Wrap a node function so it merges its output back into the incoming state."""
+    def wrapped(state: dict) -> dict:
+        updates = fn(state)
+        return {**state, **updates}
+    return RunnableLambda(wrapped)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # NODE 1 — Query Encoder + Vector Memory Retrieval
 # ─────────────────────────────────────────────────────────────────────────────
 def retrieve_node(state: AgentState):
     """
     User Query → Query Encoder → Vector Memory
-    Uses ARC.top_k for dynamic number of chunks retrieved.
+    Uses the per-request ARC snapshot (state['arc_params']) for top_k so that
+    concurrent sessions do not clobber each other's retrieval parameters.
     """
     question = state["question"]
-    session_id = state.get("arc_params", {}).get("_session_id", "")
-    emit_event(session_id, "retrieve", f"Encoding query and searching Vector Memory (top-k={arc.top_k})")
+    # ── Read parameters from the per-request snapshot, NOT the live global ──
+    snap       = state.get("arc_params", {})
+    session_id = snap.get("_session_id", "")
+    top_k      = snap.get("top_k", arc.top_k)  # isolated to this request
 
-    # Adjust chunk size heuristically before querying
+    emit_event(session_id, "retrieve", f"Encoding query and searching Vector Memory (top-k={top_k})")
+
+    # Still call the global adjuster so ARC *learns* from query length —
+    # but the updated chunk values are re-snapshotted below, not read live.
     arc.adjust_chunk_size(question)
 
-    # Generate embedding if using Pinecone or for consistent grading
-    query_embedding = None
-    if USE_PINECONE:
-        query_embedding = embeddings_model.embed_query(question)
+    threshold = snap.get("similarity_threshold", arc.similarity_threshold)
 
-    results = search_vector_store(question, n_results=arc.top_k, embedding=query_embedding)
-    documents = results.get("documents", [[]])[0] or []
-    metadatas = results.get("metadatas", [[]])[0] or []
-    distances = results.get("distances", [[]])[0] or []
+    def do_search(q: str):
+        emb = get_embeddings_model().embed_query(q) if USE_PINECONE else None
+        res = search_vector_store(q, n_results=top_k, embedding=emb)
+        docs = res.get("documents", [[]])[0] or []
+        metas = res.get("metadatas", [[]])[0] or []
+        dists = res.get("distances", [[]])[0] or []
+        return docs, metas, dists
+
+    # 1. Initial fast search
+    documents, metadatas, distances = do_search(question)
+
+    # Calculate best score
+    best_score = 0.0
+    if distances:
+        if USE_PINECONE:
+            best_score = max(1 - d for d in distances)
+        else:
+            best_score = max(1 / (1 + d) for d in distances)
+
+    # 2. Lazy Query Expansion (only if initial search is weak)
+    if best_score < threshold and len(question.split()) < 10:
+        emit_event(session_id, "retrieve", f"Initial search weak (score {best_score:.2f} < {threshold}). Expanding query for better recall.")
+        expansion_prompt = PromptTemplate(
+            template="You are a medical query expander. Given the short query below, expand it with 3-4 highly relevant medical synonyms or related terms to improve vector search recall. Output ONLY the original query followed by the synonyms on a single line, nothing else. Query: {question}",
+            input_variables=["question"]
+        )
+        try:
+            expanded = (expansion_prompt | llm).invoke({"question": question}).content.strip()
+            if expanded:
+                # 3. Second search with expanded query
+                documents, metadatas, distances = do_search(expanded)
+        except Exception:
+            pass
 
     return {
         "documents": documents,
         "metadatas": metadatas,
         "distances": distances,
+        # Re-snapshot after adjust_chunk_size so downstream nodes (web_search)
+        # get the query-tuned chunk size for THIS request only.
         "arc_params": arc.get_params() | {"_session_id": session_id},
         "pipeline_steps": ["retrieve"],
     }
@@ -144,16 +202,24 @@ def grade_documents_node(state: AgentState):
         return {"web_fallback": True, "freshness_ok": False, "pipeline_steps": steps + ["grade"]}
 
     # ── Similarity Check ──────────────────────────────────────────────────
-    threshold = arc.similarity_threshold
-    
+    # Read from the per-request snapshot — never from the live global —
+    # so a concurrent session's adjust_on_weak/strong_context() call cannot
+    # change the threshold we use mid-pipeline.
+    threshold = state.get("arc_params", {}).get("similarity_threshold", arc.similarity_threshold)
+
     similarity_pass = False
+    best_score = 0.0
     if distances:
         if USE_PINECONE:
             # Pinecone: distance = 1 - cosine_score. We want cosine_score >= threshold
-            similarity_pass = any((1 - d) >= threshold for d in distances)
+            scores = [(1 - d) for d in distances]
         else:
             # ChromaDB L2 distance: lower = more similar
-            similarity_pass = any((1 / (1 + d)) >= threshold for d in distances)
+            scores = [(1 / (1 + d)) for d in distances]
+        
+        if scores:
+            best_score = max(scores)
+            similarity_pass = best_score >= threshold
 
     # ── Freshness Check ───────────────────────────────────────────────────
     freshness_ok = True
@@ -168,7 +234,7 @@ def grade_documents_node(state: AgentState):
                         stale_count += 1
                 except (ValueError, KeyError):
                     pass
-        
+
         # If more than half the chunks are stale, flag it
         if stale_count > len(metadatas) / 2:
             freshness_ok = False
@@ -176,21 +242,32 @@ def grade_documents_node(state: AgentState):
     # ── Coverage Check (LLM-based) ────────────────────────────────────────
     coverage_pass = False
     if similarity_pass:
-        prompt = PromptTemplate(
-            template=(
-                "You are the Context Awareness Gate. Assess whether the retrieved document "
-                "adequately covers what the user needs.\n"
-                "Document: {document}\nUser Query: {question}\n"
-                "Does this document provide strong, specific coverage? Answer 'yes' or 'no'."
-            ),
-            input_variables=["document", "question"],
-        )
-        chain = prompt | structured_llm
-        for doc in documents[:2]:  # check top 2 docs only
-            result = chain.invoke({"document": doc, "question": question})
-            if result.score == "yes":
-                coverage_pass = True
-                break
+        if best_score >= 0.60:
+            emit_event(session_id, "grade", f"Fast-Path Coverage: Score {best_score:.2f} >= 0.60. Skipping LLM judge.")
+            coverage_pass = True
+        else:
+            prompt = PromptTemplate(
+                template=(
+                    "You are the Context Awareness Gate. Assess whether the retrieved context "
+                    "adequately covers what the user needs.\n"
+                    "Context:\n{context}\n\nUser Query: {question}\n"
+                    "Does this context provide strong, specific coverage of the user's question? Answer 'yes' or 'no'."
+                ),
+                input_variables=["context", "question"],
+            )
+            chain = prompt | structured_llm
+            
+            # Deduplicate chunks to avoid passing identical chunks if there are duplicates
+            unique_docs = list(dict.fromkeys(documents))
+            # Combine the chunks to see if collectively they answer the question
+            combined_context = "\n\n---\n\n".join(unique_docs)
+            
+            try:
+                result = chain.invoke({"context": combined_context, "question": question})
+                if result.score.lower() == "yes":
+                    coverage_pass = True
+            except Exception as e:
+                print(f"Coverage check failed: {e}")
 
     context_strong = similarity_pass and coverage_pass and freshness_ok
 
@@ -211,7 +288,7 @@ def grade_documents_node(state: AgentState):
     return {
         "web_fallback": not context_strong,
         "freshness_ok": freshness_ok,
-        "original_documents": state.get("documents", []), # store existing chunks to prevent deletion by web_search
+        "original_documents": state.get("documents", []),  # store existing chunks to prevent deletion by web_search
         "pipeline_steps": steps + ["grade"],
     }
 
@@ -236,6 +313,12 @@ def web_search_node(state: AgentState):
 
     docs = search_tool.invoke({"query": question})
 
+    if isinstance(docs, dict):
+        if "results" in docs and isinstance(docs["results"], list):
+            docs = docs["results"]  # Extract the list of results
+        else:
+            docs = [docs]  # Wrap in list so it can be handled below
+
     if isinstance(docs, str):
         raw_text = docs
     elif isinstance(docs, list):
@@ -252,8 +335,12 @@ def web_search_node(state: AgentState):
         raw_text = str(docs)
 
     # Dynamic Chunking Module — ARC-adaptive
-    chunk_size = arc.chunk_size
-    chunk_overlap = arc.chunk_overlap
+    # Read chunk params from the per-request snapshot set by retrieve_node
+    # (which already called arc.adjust_chunk_size and re-snapshotted).
+    # This ensures concurrent requests use their own query-tuned values.
+    _snap        = state.get("arc_params", {})
+    chunk_size   = _snap.get("chunk_size",   arc.chunk_size)
+    chunk_overlap = _snap.get("chunk_overlap", arc.chunk_overlap)
     emit_event(
         session_id,
         "chunk",
@@ -303,13 +390,13 @@ def credibility_node(state: AgentState):
     chain = prompt | structured_llm
 
     credible_chunks = []
-    
-    # Batch embed credible chunks to be efficient
-    temp_list = []
-    
-    for chunk in chunks:
-        result = chain.invoke({"chunk": chunk, "question": question})
-        if result.score == "yes":
+
+    # Run LLM credibility checks in parallel for all chunks
+    inputs = [{"chunk": chunk, "question": question} for chunk in chunks]
+    results = chain.batch(inputs)
+
+    for chunk, result in zip(chunks, results):
+        if result.score.lower() == "yes":
             credible_chunks.append(chunk)
 
     if credible_chunks:
@@ -336,10 +423,14 @@ def credibility_node(state: AgentState):
 # ─────────────────────────────────────────────────────────────────────────────
 # NODE 4 — Context Builder + Generator Model (LLM)
 # ─────────────────────────────────────────────────────────────────────────────
+class MedResponse(BaseModel):
+    answer: str = Field(description="The detailed medical answer to the user's query.")
+    hallucination_flagged: bool = Field(description="True ONLY if the answer contains medical claims not supported by the context or general medical knowledge.")
+
 def generate_node(state: AgentState):
     """
     Context Builder → Generator Model (LLM)
-    Assembles ranked context and generates the answer.
+    Assembles ranked context and generates the answer in a single structured output, replacing the Critic node.
     """
     documents = state.get("documents", [])
     metadatas = state.get("metadatas", [])
@@ -351,7 +442,11 @@ def generate_node(state: AgentState):
 
     # Context Builder — prepend metadata to each chunk for better grounding
     context_chunks = []
+    seen = set()
     for i, doc in enumerate(documents if isinstance(documents, list) else [documents]):
+        if doc in seen:
+            continue
+        seen.add(doc)
         meta_str = ""
         if isinstance(metadatas, list) and i < len(metadatas) and metadatas[i]:
             meta = metadatas[i]
@@ -361,147 +456,109 @@ def generate_node(state: AgentState):
 
     context = "\n\n---\n\n".join(context_chunks)
 
-    emit_event(session_id, "generate", "Generator Model (GPT-4o-mini) synthesizing answer")
+    emit_event(session_id, "generate", "Generator Model (GPT-4o-mini) synthesizing answer and validating")
 
     system_prompt = (
-        "You are a highly capable AI assistant part of an Adaptive Context-Aware RAG system. "
-        "Answer the user's question strictly based on the retrieved context below. "
-        "CRITICAL RULE: If the user asks about a specific person, entity, or object by name, you MUST verify that the name "
-        "actually appears in the context in relation to the requested information. Do NOT apply facts from one person/entity "
-        "to another person/entity. If the requested information for the specific person/entity is not in the context, "
-        "clearly state that you don't have that information. Do not hallucinate.\n\n"
-        f"Context:\n{context}"
+        "You are **MedAI**, an expert clinical knowledge assistant built on an Adaptive Context-Aware RAG pipeline.\n"
+        "RESPONSE RULES:\n"
+        "1. **Direct and Specific First**: Lead your response with the direct, specific answer. State the exact specific term, protocol, or numeric range requested immediately.\n"
+        "2. **Precision over Verbosity**: Do not expand with generic background info unless asked. Bullet points are fine but keep the core answer at the very top.\n"
+        "3. **Context Grounding**: Base your answer on the retrieved clinical context below.\n"
+        "4. **No Hallucinations**: Do NOT apply clinical facts from one disease/drug/condition to another.\n"
+        "5. **Empty Context**: If the context below does NOT contain the answer, use your general parametric medical knowledge to answer, but you MUST prefix your answer with EXACTLY: '*(From general medical knowledge, not found in retrieved documents)*\\n\\n'.\n"
+        "6. **Disclaimer**: Always end responses involving symptoms, diagnoses, or treatments with: "
+        "'⚕️ **Medical Disclaimer**: This information is for educational purposes only. Always consult a licensed healthcare professional before making any medical decisions.'\n\n"
+        f"Clinical Context:\n{context}"
     )
 
     input_messages = [SystemMessage(content=system_prompt)] + list(messages)
-    response = llm.invoke(input_messages)
-
-    return {
-        "final_answer": response.content,
-        "pipeline_steps": steps + ["context_builder", "generate"],
-    }
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# NODE 5 — Critic / Validator
-# ─────────────────────────────────────────────────────────────────────────────
-def critic_node(state: AgentState):
-    """
-    Critic / Validator → Final Output
-    Flags hallucinations or unsupported claims.
-    """
-    question = state["question"]
-    documents = state.get("documents", [])
-    answer = state["final_answer"]
-    session_id = state.get("arc_params", {}).get("_session_id", "")
-    steps = list(state.get("pipeline_steps", []))
-
-    emit_event(session_id, "critic", "Critic / Validator checking for hallucinations")
-
-    context = "\n\n---\n\n".join(documents) if isinstance(documents, list) else str(documents)
-
-    prompt = PromptTemplate(
-        template=(
-            "You are a Critic Validator in an AI pipeline. Evaluate whether the answer "
-            "hallucinates or contains claims completely unsupported by the context.\n"
-            "Context: {context}\nQuestion: {question}\nAnswer: {answer}\n"
-            "Does the answer hallucinate? Answer 'yes' if it does, 'no' if it is clean."
-        ),
-        input_variables=["context", "question", "answer"],
-    )
-    chain = prompt | structured_llm
-    result = chain.invoke({"context": context, "question": question, "answer": answer})
-
-    final_output = answer
-    if result.score == "yes":
-        final_output = (
-            answer
-            + "\n\n> ⚠️ **Validator Warning**: This response was flagged for potential "
-            "hallucinations or unsupported claims. Please verify independently."
-        )
+    
+    chain = llm.with_structured_output(MedResponse)
+    response = chain.invoke(input_messages)
+    
+    final_ans = response.answer
+    hallucination_flagged = response.hallucination_flagged
+    
+    if hallucination_flagged:
+        final_ans += "\n\n> ⚠️ **Validator Warning**: This response was flagged for potential hallucinations or unsupported claims. Please verify independently."
 
     emit_event(session_id, "done", "Final output ready")
 
     return {
-        "final_answer": final_output,
+        "final_answer": final_ans,
+        "hallucination_flagged": hallucination_flagged,
         "needs_feedback": True,
-        "pipeline_steps": steps + ["critic", "done"],
+        "pipeline_steps": steps + ["context_builder", "generate", "done"],
     }
 
 
+
+# Build LangChain LCEL Pipeline
 # ─────────────────────────────────────────────────────────────────────────────
-# Conditional Edge
+#
+# Topology (mirrors the original LangGraph flow):
+#
+#   retrieve → grade ──► [web_fallback=True]  → web_search → credibility → generate → critic
+#                    └──► [web_fallback=False] → generate → critic
+#
+# Implementation:
+#   • Each node is wrapped in _wrap_node() which merges partial returns into state.
+#   • RunnableBranch handles the conditional routing after grade.
+#   • The full sequence is: retrieve → grade → branch → critic
 # ─────────────────────────────────────────────────────────────────────────────
-def decide_to_generate(state: AgentState):
-    """Context Awareness Gate routing."""
-    return "web_search" if state.get("web_fallback", True) else "generate"
 
+retrieve_r    = _wrap_node(retrieve_node)
+grade_r       = _wrap_node(grade_documents_node)
+web_search_r  = _wrap_node(web_search_node)
+credibility_r = _wrap_node(credibility_node)
+generate_r    = _wrap_node(generate_node)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Build LangGraph
-# ─────────────────────────────────────────────────────────────────────────────
-from langgraph.checkpoint.memory import MemorySaver
+# Web path: web_search → credibility → generate
+_web_path = web_search_r | credibility_r | generate_r
 
-workflow = StateGraph(AgentState)
-
-workflow.add_node("retrieve", retrieve_node)
-workflow.add_node("grade", grade_documents_node)
-workflow.add_node("web_search", web_search_node)
-workflow.add_node("credibility", credibility_node)
-workflow.add_node("generate", generate_node)
-workflow.add_node("critic", critic_node)
-
-workflow.set_entry_point("retrieve")
-workflow.add_edge("retrieve", "grade")
-workflow.add_conditional_edges(
-    "grade",
-    decide_to_generate,
-    {"web_search": "web_search", "generate": "generate"},
+# Conditional branch — mirrors decide_to_generate()
+_branch = RunnableBranch(
+    (lambda state: state.get("web_fallback", True), _web_path),
+    generate_r,  # default: context strong, go straight to generate
 )
-workflow.add_edge("web_search", "credibility")
-workflow.add_edge("credibility", "generate")
-workflow.add_edge("generate", "critic")
-workflow.add_edge("critic", END)
 
-memory = MemorySaver()
-app = workflow.compile(checkpointer=memory)
+# Complete LCEL pipeline
+pipeline = retrieve_r | grade_r | _branch
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Public entry point
 # ─────────────────────────────────────────────────────────────────────────────
 async def process_message(session_id: str, message: str) -> dict:
-    config = {"configurable": {"thread_id": session_id}}
-
-    # Restore or start conversation history
-    current_state = app.get_state(config)
-    messages = (
-        current_state.values.get("messages", [])
-        if getattr(current_state, "values", None)
-        else []
-    )
-    messages = list(messages)
+    # Restore or start conversation history from in-memory session store
+    messages = list(_session_memory.get(session_id, []))
     messages.append(HumanMessage(content=message))
 
-    inputs = {
+    inputs: AgentState = {
         "question": message,
         "messages": messages,
         "arc_params": arc.get_params() | {"_session_id": session_id},
         "pipeline_steps": [],
         "documents": [],
+        "original_documents": [],
         "metadatas": [],
         "distances": [],
         "web_fallback": False,
         "freshness_ok": True,
+        "needs_feedback": False,
+        "final_answer": "",
     }
 
-    result = app.invoke(inputs, config=config)
+    # Run the LCEL pipeline (synchronous invoke inside async context)
+    result = await asyncio.get_event_loop().run_in_executor(
+        None, pipeline.invoke, inputs
+    )
 
-    # Append AI response to conversation history persisted in graph memory
+    # Persist AI response to in-memory session memory
     final_answer = result.get("final_answer", "")
-    updated_messages = list(result.get("messages", messages))
     if final_answer:
-        updated_messages.append(AIMessage(content=final_answer))
+        messages.append(AIMessage(content=final_answer))
+    _session_memory[session_id] = messages
 
     return {
         "content": final_answer,

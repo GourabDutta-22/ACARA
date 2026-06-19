@@ -27,14 +27,14 @@ class ARCController:
     MIN_THRESHOLD = 0.35
     MAX_THRESHOLD = 0.60
     MIN_TOP_K = 2
-    MAX_TOP_K = 8
+    MAX_TOP_K = 10
     MIN_CHUNK_SIZE = 300
     MAX_CHUNK_SIZE = 2000
 
     def __init__(
         self,
-        similarity_threshold: float = 0.45,
-        top_k: int = 3,
+        similarity_threshold: float = 0.40,
+        top_k: int = 5,
         chunk_size: int = 1000,
         chunk_overlap: int = 200,
     ):
@@ -122,8 +122,8 @@ class ARCController:
     def reset(self):
         """Resets the ARC parameters to their original defaults."""
         with self._lock:
-            self._similarity_threshold = 0.45
-            self._top_k = 3
+            self._similarity_threshold = 0.40
+            self._top_k = 5
             self._chunk_size = 1000
             self._chunk_overlap = 200
             self._adjustment_count = 0

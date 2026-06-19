@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACARA — Architecture &amp; System Diagrams</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Calibri:wght@400;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a2e;
+      padding: 40px 24px;
+    }
+
+    /* ── Diagram Container ── */
+    .diagram-wrapper {
+      max-width: 1100px;
+      margin: 0 auto 60px auto;
+      background: #f4f5f7;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      padding: 32px 28px 24px;
+      position: relative;
+    }
+
+    /* ═══════════════════════════════════════════════
+       DIAGRAM 1: Architectural Evolution
+       ═══════════════════════════════════════════════ */
+
+    .evo-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 16px;
+    }
+
+    .evo-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top icon area */
+    .evo-icon {
+      width: 80px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    /* Column header */
+    .evo-header {
+      width: 100%;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      border-radius: 3px 3px 0 0;
+      letter-spacing: 0.3px;
+    }
+
+    /* Feature list */
+    .evo-features {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .evo-feat {
+      width: 100%;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a2e;
+      text-align: center;
+      border: 1px solid;
+      border-top: none;
+    }
+
+    /* Characteristic tags */
+    .evo-chars {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+    }
+
+    .evo-char {
+      padding: 4px 12px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #3a3a4a;
+      background: #e8e9ec;
+      border: 1px solid #c8ccd4;
+      border-radius: 3px;
+      text-align: center;
+    }
+
+    /* Bottom icon + label */
+    .evo-bottom {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .evo-bottom-label {
+      font-size: 10px;
+      color: #5a5a6a;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Evolution arrow */
+    .evo-arrow {
+      display: flex;
+      align-items: center;
+      margin: 8px 0 0 0;
+      padding: 0 10px;
+    }
+
+    .evo-arrow-bar {
+      flex: 1;
+      height: 3px;
+      background: linear-gradient(90deg, #b0b0b0, #7a7a8a, #4a4a5a);
+    }
+
+    .evo-arrow-head {
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 16px solid #4a4a5a;
+    }
+
+    .evo-arrow-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4a4a5a;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* Color themes for the 3 columns */
+    .col-navy .evo-header { background: #1B3A5C; }
+    .col-navy .evo-feat { background: #d6e2f0; border-color: #a3b8d0; }
+    .col-navy .evo-char { background: #c2d1e4; border-color: #a3b8d0; }
+
+    .col-gold .evo-header { background: #7B6B2B; }
+    .col-gold .evo-feat { background: #f0e8c8; border-color: #cfc09a; }
+    .col-gold .evo-char { background: #e4dab8; border-color: #cfc09a; }
+
+    .col-teal .evo-header { background: #1B5E5E; }
+    .col-teal .evo-feat { background: #c8e6e6; border-color: #8fc0c0; }
+    .col-teal .evo-char { background: #b0d8d8; border-color: #8fc0c0; }
+
+
+    /* ═══════════════════════════════════════════════
+       DIAGRAM 2: System Architecture (Modularity)
+       ═══════════════════════════════════════════════ */
+
+    .sys-top-sources {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      margin-bottom: 10px;
+    }
+
+    .sys-source {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sys-source-icon {
+      width: 56px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sys-source-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #3a3a4a;
+      text-align: center;
+      max-width: 80px;
+      line-height: 1.2;
+    }
+
+    /* Down arrows from sources */
+    .sys-down-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      margin-bottom: 8px;
+    }
+
+    .sys-darrow {
+      font-size: 18px;
+      color: #5a5a6a;
+    }
+
+    /* Enrichment badge */
+    .sys-enrichment {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .sys-enrich-badge {
+      background: #1B5E5E;
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .sys-enrich-sub {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sys-enrich-tag {
+      padding: 3px 10px;
+      background: #e0d8b8;
+      border: 1px solid #c0b898;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #5a4a2a;
+    }
+
+    /* Main layers row */
+    .sys-layers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+      background: #ebedf0;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      padding: 14px 12px;
+    }
+
+    .sys-layer {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sys-layer-header {
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .sys-layer-body {
+      background: #fff;
+      border: 1px solid #c8ccd4;
+      border-top: none;
+      border-radius: 0 0 3px 3px;
+      padding: 8px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .sys-module {
+      padding: 5px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .sys-module.blue { background: #d6e2f0; border-color: #a3b8d0; color: #1B3A5C; }
+    .sys-module.gold { background: #f0e8c8; border-color: #cfc09a; color: #5a4a2a; }
+    .sys-module.teal { background: #c8e6e6; border-color: #8fc0c0; color: #1B5E5E; }
+    .sys-module.green { background: #d4edda; border-color: #a3d4ad; color: #1a5928; }
+
+    /* Layer colors */
+    .layer-blue .sys-layer-header { background: #1B3A5C; }
+    .layer-gold .sys-layer-header { background: #7B6B2B; }
+    .layer-teal .sys-layer-header { background: #1B5E5E; }
+    .layer-red .sys-layer-header { background: #8B2252; }
+
+    /* Bottom management bar */
+    .sys-management {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 8px 16px;
+      background: #ebedf0;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+    }
+
+    .sys-mgmt-item {
+      padding: 4px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #3a3a4a;
+      background: #fff;
+      border: 1px solid #c8ccd4;
+      border-radius: 3px;
+    }
+
+    /* Modularity arrow */
+    .mod-arrow {
+      display: flex;
+      align-items: center;
+      margin: 12px 0 0 0;
+      padding: 0 10px;
+    }
+
+    .mod-arrow-bar {
+      flex: 1;
+      height: 3px;
+      background: linear-gradient(90deg, #b0b0b0, #7a7a8a, #4a4a5a);
+    }
+
+    .mod-arrow-head {
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 16px solid #4a4a5a;
+    }
+
+    .mod-arrow-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4a4a5a;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* Connecting arrows row */
+    .sys-arrows-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 60px;
+      margin-bottom: 4px;
+    }
+
+    .sys-arrow-down {
+      font-size: 16px;
+      color: #5a5a6a;
+    }
+
+
+    /* ═══════════════════════════════════════════════
+       DIAGRAM 3: Data Integration Flow
+       ═══════════════════════════════════════════════ */
+
+    .integ-title-bar {
+      background: #1B3A5C;
+      color: #fff;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      letter-spacing: 0.3px;
+    }
+
+    .integ-sources {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 8px;
+    }
+
+    .integ-source {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .integ-src-icon {
+      width: 60px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .integ-src-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #3a3a4a;
+      text-align: center;
+      max-width: 90px;
+      line-height: 1.2;
+    }
+
+    /* Down arrows */
+    .integ-darrows {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      margin-bottom: 10px;
+    }
+
+    .integ-darrow {
+      font-size: 20px;
+      color: #5a5a6a;
+    }
+
+    /* Central process box */
+    .integ-process {
+      max-width: 600px;
+      margin: 0 auto 12px auto;
+      background: #ebedf0;
+      border: 2px solid #8a9ab0;
+      border-radius: 6px;
+      padding: 16px 20px;
+      position: relative;
+    }
+
+    .integ-process-title {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1B3A5C;
+      margin-bottom: 12px;
+    }
+
+    .integ-process-inner {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .integ-pbox {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .integ-pbox-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1B3A5C;
+      margin-bottom: 6px;
+    }
+
+    .integ-pbox-icon {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .integ-pbox-sub {
+      font-size: 9px;
+      font-weight: 600;
+      color: #6a6a7a;
+      font-style: italic;
+    }
+
+    /* Side labels */
+    .integ-sides {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 820px;
+      margin: -60px auto 20px auto;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .integ-side-box {
+      background: #fff;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      padding: 8px 14px;
+      text-align: center;
+      width: 130px;
+    }
+
+    .integ-side-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    .integ-side-text {
+      font-size: 10px;
+      font-weight: 600;
+      color: #3a3a4a;
+      line-height: 1.3;
+    }
+
+    /* Bottom repository bar */
+    .integ-repo {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #1B5E5E;
+      color: #fff;
+      padding: 8px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .integ-down-arrow-center {
+      text-align: center;
+      font-size: 20px;
+      color: #5a5a6a;
+      margin-bottom: 8px;
+    }
+
+
+    /* ── Figure captions ── */
+    .fig-caption {
+      text-align: center;
+      font-size: 12px;
+      color: #5a5a6a;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .fig-caption em {
+      font-style: normal;
+      color: #1a1a2e;
+      font-weight: 700;
+    }
+
+    /* ── Shared SVG icon styles ── */
+    .icon-svg {
+      width: 56px;
+      height: 48px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       APPENDICES
+       ═══════════════════════════════════════════════ */
+
+    .appendix-section {
+      max-width: 1100px;
+      margin: 0 auto 48px auto;
+      padding: 0 24px;
+    }
+
+    .appendix-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #c8ccd4;
+    }
+
+    .appendix-badge {
+      background: #1B3A5C;
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .appendix-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    /* Pseudocode block */
+    .pseudo-block {
+      background: #f8f9fb;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .pseudo-label {
+      background: #ebedf0;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1B3A5C;
+      border-bottom: 1px solid #c8ccd4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pseudo-label-tag {
+      background: #1B5E5E;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .pseudo-code {
+      padding: 14px 20px;
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #2a2a3a;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .pseudo-code .keyword {
+      color: #1B3A5C;
+      font-weight: 700;
+    }
+
+    .pseudo-code .comment {
+      color: #7B6B2B;
+      font-style: italic;
+    }
+
+    .pseudo-code .fn {
+      color: #1B5E5E;
+      font-weight: 700;
+    }
+
+    .pseudo-code .val {
+      color: #8B2252;
+    }
+
+    /* Hyperparameter table */
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .param-table thead th {
+      background: #1B3A5C;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+    }
+
+    .param-table tbody td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #dde0e6;
+      color: #2a2a3a;
+    }
+
+    .param-table tbody tr:nth-child(even) {
+      background: #f4f5f7;
+    }
+
+    .param-table tbody tr:hover {
+      background: #e8edf4;
+    }
+
+    .param-table .mono {
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 11px;
+      color: #1B5E5E;
+      font-weight: 600;
+    }
+
+    .param-table .range {
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 11px;
+      color: #7B6B2B;
+    }
+
+    .table-note {
+      font-size: 10px;
+      color: #6a6a7a;
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    /* Sample query cards */
+    .query-card {
+      background: #f8f9fb;
+      border: 1px solid #c8ccd4;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .query-card-header {
+      background: #ebedf0;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1B3A5C;
+      border-bottom: 1px solid #c8ccd4;
+    }
+
+    .query-card-body {
+      padding: 0;
+    }
+
+    .query-row {
+      display: flex;
+      border-bottom: 1px solid #e4e6ea;
+    }
+
+    .query-row:last-child {
+      border-bottom: none;
+    }
+
+    .query-row-label {
+      width: 160px;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #3a3a4a;
+      background: #eef0f4;
+      flex-shrink: 0;
+      border-right: 1px solid #dde0e6;
+    }
+
+    .query-row-content {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #2a2a3a;
+    }
+
+    .query-row-content code {
+      background: #e8edf4;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 10.5px;
+      color: #1B5E5E;
+    }
+
+    .arc-snapshot {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .arc-tag {
+      padding: 3px 8px;
+      background: #c8e6e6;
+      border: 1px solid #8fc0c0;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #1B5E5E;
+      font-family: 'Courier New', Consolas, monospace;
+    }
+
+    .route-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .route-tag.strong {
+      background: #d4edda;
+      border: 1px solid #a3d4ad;
+      color: #1a5928;
+    }
+
+    .route-tag.weak {
+      background: #f0e8c8;
+      border: 1px solid #cfc09a;
+      color: #5a4a2a;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .evo-columns { grid-template-columns: 1fr; gap: 20px; }
+      .sys-layers { grid-template-columns: 1fr 1fr; }
+      .integ-sides { flex-direction: column; gap: 10px; margin: 10px auto; }
+      .query-row { flex-direction: column; }
+      .query-row-label { width: 100%; border-right: none; border-bottom: 1px solid #dde0e6; }
+      body { padding: 16px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DIAGRAM 1: Architectural Evolution of RAG Systems
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="diagram-wrapper">
+
+  <div class="evo-columns">
+
+    <!-- Column 1: Keyword-Based RAG -->
+    <div class="evo-col col-navy">
+      <div class="evo-icon">
+        <svg viewBox="0 0 80 70" class="icon-svg" xmlns="http://www.w3.org/2000/svg">
+          <!-- magnifying glass over document -->
+          <rect x="18" y="10" width="32" height="42" rx="2" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="2"/>
+          <line x1="24" y1="20" x2="44" y2="20" stroke="#a3b8d0" stroke-width="2"/>
+          <line x1="24" y1="27" x2="44" y2="27" stroke="#a3b8d0" stroke-width="2"/>
+          <line x1="24" y1="34" x2="38" y2="34" stroke="#a3b8d0" stroke-width="2"/>
+          <circle cx="56" cy="36" r="12" fill="none" stroke="#1B3A5C" stroke-width="2.5"/>
+          <line x1="64" y1="44" x2="72" y2="54" stroke="#1B3A5C" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="evo-header">Keyword-Based RAG</div>
+      <div class="evo-features">
+        <div class="evo-feat col-navy">Keyword Indexing</div>
+        <div class="evo-feat col-navy">Boolean Queries</div>
+        <div class="evo-feat col-navy">Document Retrieval</div>
+      </div>
+      <div class="evo-chars">
+        <div class="evo-char">Simple Matching</div>
+        <div class="evo-char">Limited Scalability</div>
+      </div>
+      <div class="evo-bottom">
+        <svg viewBox="0 0 40 40" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+          <!-- database cylinder -->
+          <ellipse cx="20" cy="10" rx="14" ry="5" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="1.5"/>
+          <rect x="6" y="10" width="28" height="18" fill="#d6e2f0" stroke="none"/>
+          <line x1="6" y1="10" x2="6" y2="28" stroke="#1B3A5C" stroke-width="1.5"/>
+          <line x1="34" y1="10" x2="34" y2="28" stroke="#1B3A5C" stroke-width="1.5"/>
+          <ellipse cx="20" cy="28" rx="14" ry="5" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="1.5"/>
+        </svg>
+        <div class="evo-bottom-label">Structured Repositories</div>
+      </div>
+    </div>
+
+    <!-- Column 2: Semantic Agentic RAG -->
+    <div class="evo-col col-gold">
+      <div class="evo-icon">
+        <svg viewBox="0 0 80 70" class="icon-svg" xmlns="http://www.w3.org/2000/svg">
+          <!-- network/ontology graph -->
+          <circle cx="40" cy="18" r="8" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="2"/>
+          <circle cx="18" cy="46" r="7" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="2"/>
+          <circle cx="62" cy="46" r="7" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="2"/>
+          <circle cx="40" cy="54" r="6" fill="#e4dab8" stroke="#7B6B2B" stroke-width="1.5"/>
+          <line x1="40" y1="26" x2="20" y2="40" stroke="#7B6B2B" stroke-width="1.5"/>
+          <line x1="40" y1="26" x2="60" y2="40" stroke="#7B6B2B" stroke-width="1.5"/>
+          <line x1="24" y1="48" x2="34" y2="52" stroke="#7B6B2B" stroke-width="1.5"/>
+          <line x1="56" y1="48" x2="46" y2="52" stroke="#7B6B2B" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="evo-header">Semantic Agentic RAG</div>
+      <div class="evo-features">
+        <div class="evo-feat col-gold">Vector Embeddings</div>
+        <div class="evo-feat col-gold">Agent Orchestration</div>
+        <div class="evo-feat col-gold">Web Search Fallback</div>
+      </div>
+      <div class="evo-chars">
+        <div class="evo-char">Contextual Understanding</div>
+        <div class="evo-char">Domain Modeling</div>
+      </div>
+      <div class="evo-bottom">
+        <svg viewBox="0 0 40 40" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+          <!-- network graph small -->
+          <circle cx="20" cy="10" r="5" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+          <circle cx="8" cy="30" r="5" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+          <circle cx="32" cy="30" r="5" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+          <line x1="17" y1="14" x2="10" y2="26" stroke="#7B6B2B" stroke-width="1.2"/>
+          <line x1="23" y1="14" x2="30" y2="26" stroke="#7B6B2B" stroke-width="1.2"/>
+          <line x1="13" y1="30" x2="27" y2="30" stroke="#7B6B2B" stroke-width="1.2"/>
+        </svg>
+        <div class="evo-bottom-label">Semantic Knowledge Base</div>
+      </div>
+    </div>
+
+    <!-- Column 3: ACARA -->
+    <div class="evo-col col-teal">
+      <div class="evo-icon">
+        <svg viewBox="0 0 80 70" class="icon-svg" xmlns="http://www.w3.org/2000/svg">
+          <!-- 3D cube / embedding space -->
+          <polygon points="40,8 68,22 68,48 40,62 12,48 12,22" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="2"/>
+          <line x1="40" y1="8" x2="40" y2="62" stroke="#1B5E5E" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="12" y1="22" x2="68" y2="48" stroke="#1B5E5E" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="68" y1="22" x2="12" y2="48" stroke="#1B5E5E" stroke-width="1" stroke-dasharray="3,2"/>
+          <circle cx="40" cy="28" r="3" fill="#1B5E5E"/>
+          <circle cx="30" cy="40" r="2.5" fill="#2d8a8a"/>
+          <circle cx="50" cy="38" r="2.5" fill="#2d8a8a"/>
+          <circle cx="38" cy="48" r="2" fill="#4aabab"/>
+          <circle cx="48" cy="22" r="2" fill="#4aabab"/>
+        </svg>
+      </div>
+      <div class="evo-header">ACARA — Adaptive Retrieval</div>
+      <div class="evo-features">
+        <div class="evo-feat col-teal">Adaptive Retrieval Controller</div>
+        <div class="evo-feat col-teal">Dynamic Chunking</div>
+        <div class="evo-feat col-teal">Context-Aware Gating</div>
+      </div>
+      <div class="evo-chars">
+        <div class="evo-char">Context-Aware Retrieval</div>
+        <div class="evo-char">Scalable Performance</div>
+      </div>
+      <div class="evo-bottom">
+        <svg viewBox="0 0 40 40" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+          <!-- cloud with nodes -->
+          <path d="M8,26 Q4,26 4,22 Q4,18 8,18 Q8,12 14,12 Q16,8 22,8 Q28,8 30,12 Q36,12 36,18 Q40,18 40,22 Q40,26 36,26 Z" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+          <circle cx="16" cy="20" r="2" fill="#1B5E5E"/>
+          <circle cx="28" cy="20" r="2" fill="#1B5E5E"/>
+          <circle cx="22" cy="16" r="2" fill="#1B5E5E"/>
+          <line x1="18" y1="20" x2="26" y2="20" stroke="#1B5E5E" stroke-width="1"/>
+          <line x1="17" y1="18" x2="21" y2="17" stroke="#1B5E5E" stroke-width="1"/>
+          <line x1="24" y1="17" x2="27" y2="19" stroke="#1B5E5E" stroke-width="1"/>
+        </svg>
+        <div class="evo-bottom-label">Unstructured Data</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Evolution Arrow -->
+  <div class="evo-arrow">
+    <div class="evo-arrow-bar"></div>
+    <div class="evo-arrow-head"></div>
+  </div>
+  <div class="evo-arrow-label">Architectural Evolution</div>
+
+</div>
+
+<div class="fig-caption">
+  <em>Figure 1.</em> Architectural Evolution — from keyword-based retrieval to ACARA's self-optimizing adaptive pipeline
+</div>
+
+<br><br>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DIAGRAM 2: ACARA System Architecture (Modularity)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="diagram-wrapper">
+
+  <!-- Top: Input Sources -->
+  <div class="sys-top-sources">
+    <div class="sys-source">
+      <div class="sys-source-icon">
+        <svg viewBox="0 0 56 50" width="56" height="50" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="4" width="28" height="36" rx="2" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="1.5"/>
+          <rect x="10" y="8" width="28" height="36" rx="2" fill="#e8eef6" stroke="#1B3A5C" stroke-width="1.5"/>
+          <line x1="15" y1="16" x2="33" y2="16" stroke="#a3b8d0" stroke-width="1.5"/>
+          <line x1="15" y1="22" x2="33" y2="22" stroke="#a3b8d0" stroke-width="1.5"/>
+          <line x1="15" y1="28" x2="28" y2="28" stroke="#a3b8d0" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="sys-source-label">PDF Documents<br>&amp; Reports</div>
+    </div>
+    <div class="sys-source">
+      <div class="sys-source-icon">
+        <svg viewBox="0 0 56 50" width="56" height="50" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="6" width="40" height="30" rx="3" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+          <rect x="12" y="10" width="32" height="18" rx="1" fill="#fff" stroke="#cfc09a" stroke-width="1"/>
+          <circle cx="28" cy="40" r="3" fill="#e4dab8" stroke="#7B6B2B" stroke-width="1"/>
+          <line x1="28" y1="36" x2="28" y2="37" stroke="#7B6B2B" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="sys-source-label">Web Pages<br>&amp; Search</div>
+    </div>
+    <div class="sys-source">
+      <div class="sys-source-icon">
+        <svg viewBox="0 0 56 50" width="56" height="50" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="28" cy="14" rx="18" ry="7" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+          <rect x="10" y="14" width="36" height="20" fill="#c8e6e6" stroke="none"/>
+          <line x1="10" y1="14" x2="10" y2="34" stroke="#1B5E5E" stroke-width="1.5"/>
+          <line x1="46" y1="14" x2="46" y2="34" stroke="#1B5E5E" stroke-width="1.5"/>
+          <ellipse cx="28" cy="34" rx="18" ry="7" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+          <ellipse cx="28" cy="24" rx="18" ry="7" fill="none" stroke="#1B5E5E" stroke-width="0.8" stroke-dasharray="3,2"/>
+        </svg>
+      </div>
+      <div class="sys-source-label">Vector Store<br>(Pinecone/ChromaDB)</div>
+    </div>
+    <div class="sys-source">
+      <div class="sys-source-icon">
+        <svg viewBox="0 0 56 50" width="56" height="50" xmlns="http://www.w3.org/2000/svg">
+          <!-- chat bubbles -->
+          <rect x="4" y="6" width="30" height="20" rx="4" fill="#d4edda" stroke="#1a5928" stroke-width="1.5"/>
+          <polygon points="10,26 16,26 8,34" fill="#d4edda" stroke="#1a5928" stroke-width="1.5" stroke-linejoin="round"/>
+          <line x1="10" y1="13" x2="28" y2="13" stroke="#a3d4ad" stroke-width="1.5"/>
+          <line x1="10" y1="19" x2="24" y2="19" stroke="#a3d4ad" stroke-width="1.5"/>
+          <rect x="22" y="18" width="28" height="18" rx="4" fill="#e8f5e9" stroke="#1a5928" stroke-width="1.5"/>
+          <polygon points="44,36 38,36 46,44" fill="#e8f5e9" stroke="#1a5928" stroke-width="1.5" stroke-linejoin="round"/>
+          <line x1="28" y1="25" x2="44" y2="25" stroke="#a3d4ad" stroke-width="1.5"/>
+          <line x1="28" y1="30" x2="40" y2="30" stroke="#a3d4ad" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="sys-source-label">Chat History<br>&amp; User Queries</div>
+    </div>
+  </div>
+
+  <!-- Down Arrows -->
+  <div class="sys-down-arrows">
+    <div class="sys-darrow">▼</div>
+    <div class="sys-darrow">▼</div>
+    <div class="sys-darrow">▼</div>
+    <div class="sys-darrow">▼</div>
+  </div>
+
+  <!-- Enrichment Badge -->
+  <div class="sys-enrichment">
+    <div class="sys-enrich-badge">ARC — Adaptive Retrieval Controller</div>
+  </div>
+  <div class="sys-enrich-sub">
+    <div class="sys-enrich-tag">Parameter Tuning</div>
+    <div class="sys-enrich-tag">Contextual Tagging</div>
+    <div class="sys-enrich-tag">Feedback Signals</div>
+  </div>
+
+  <!-- Main Layers -->
+  <div class="sys-layers">
+
+    <!-- Ingestion Layer -->
+    <div class="sys-layer layer-blue">
+      <div class="sys-layer-header">Ingestion Layer</div>
+      <div class="sys-layer-body">
+        <div class="sys-module blue">PDF Parsing</div>
+        <div class="sys-module blue">Text Chunking</div>
+        <div class="sys-module blue">Embedding Generation</div>
+      </div>
+    </div>
+
+    <!-- Context Grading -->
+    <div class="sys-layer layer-gold">
+      <div class="sys-layer-header">Context Grading</div>
+      <div class="sys-layer-body">
+        <div class="sys-module gold">Similarity Check</div>
+        <div class="sys-module gold">LLM Coverage Gate</div>
+        <div class="sys-module gold">Freshness Check</div>
+      </div>
+    </div>
+
+    <!-- Retrieval -->
+    <div class="sys-layer layer-teal">
+      <div class="sys-layer-header">Adaptive Retrieval</div>
+      <div class="sys-layer-body">
+        <div class="sys-module teal">Contextual Retrieval</div>
+        <div class="sys-module teal">Web Search (Tavily)</div>
+        <div class="sys-module teal">Memory Enrichment</div>
+      </div>
+    </div>
+
+    <!-- Generation & Validation -->
+    <div class="sys-layer layer-red">
+      <div class="sys-layer-header">Generation &amp; Validation</div>
+      <div class="sys-layer-body">
+        <div class="sys-module green">Credibility Scoring</div>
+        <div class="sys-module green">LLM Generation</div>
+        <div class="sys-module green">Critic Validation</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom: Management -->
+  <div class="sys-management">
+    <div class="sys-mgmt-item">Session Management</div>
+    <div class="sys-mgmt-item">MongoDB Persistence</div>
+    <div class="sys-mgmt-item">SSE Streaming</div>
+    <div class="sys-mgmt-item">ARC State Tracking</div>
+  </div>
+
+  <!-- Modularity Arrow -->
+  <div class="mod-arrow">
+    <div class="mod-arrow-bar"></div>
+    <div class="mod-arrow-head"></div>
+  </div>
+  <div class="mod-arrow-label">Modularity</div>
+
+</div>
+
+<div class="fig-caption">
+  <em>Figure 2.</em> ACARA System Architecture — modular layers from data ingestion to validated generation with ARC orchestration
+</div>
+
+<br><br>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DIAGRAM 3: Data Integration & Value Flow
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="diagram-wrapper">
+
+  <!-- Title Bar -->
+  <div class="integ-title-bar">Heterogeneous Data Sources for ACARA</div>
+
+  <!-- Source Icons -->
+  <div class="integ-sources">
+    <div class="integ-source">
+      <div class="integ-src-icon">
+        <svg viewBox="0 0 60 50" width="60" height="50" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="4" width="26" height="34" rx="2" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="1.5"/>
+          <rect x="12" y="8" width="26" height="34" rx="2" fill="#e8eef6" stroke="#1B3A5C" stroke-width="1.5"/>
+          <text x="25" y="28" text-anchor="middle" font-size="10" font-weight="700" fill="#1B3A5C">PDF</text>
+        </svg>
+      </div>
+      <div class="integ-src-label">User-Uploaded<br>Documents</div>
+    </div>
+    <div class="integ-source">
+      <div class="integ-src-icon">
+        <svg viewBox="0 0 60 50" width="60" height="50" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="24" r="18" fill="none" stroke="#7B6B2B" stroke-width="1.5"/>
+          <ellipse cx="30" cy="24" rx="18" ry="7" fill="none" stroke="#7B6B2B" stroke-width="1"/>
+          <line x1="30" y1="6" x2="30" y2="42" stroke="#7B6B2B" stroke-width="1"/>
+          <path d="M12,24 Q22,14 30,14 Q38,14 48,24" fill="none" stroke="#7B6B2B" stroke-width="1"/>
+          <path d="M12,24 Q22,34 30,34 Q38,34 48,24" fill="none" stroke="#7B6B2B" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="integ-src-label">Web Sources<br>(Tavily Search)</div>
+    </div>
+    <div class="integ-source">
+      <div class="integ-src-icon">
+        <svg viewBox="0 0 60 50" width="60" height="50" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="12" rx="18" ry="6" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+          <rect x="12" y="12" width="36" height="22" fill="#c8e6e6" stroke="none"/>
+          <line x1="12" y1="12" x2="12" y2="34" stroke="#1B5E5E" stroke-width="1.5"/>
+          <line x1="48" y1="12" x2="48" y2="34" stroke="#1B5E5E" stroke-width="1.5"/>
+          <ellipse cx="30" cy="34" rx="18" ry="6" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="integ-src-label">Vector Store<br>Embeddings</div>
+    </div>
+    <div class="integ-source">
+      <div class="integ-src-icon">
+        <svg viewBox="0 0 60 50" width="60" height="50" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="44" height="28" rx="4" fill="#d4edda" stroke="#1a5928" stroke-width="1.5"/>
+          <line x1="15" y1="16" x2="45" y2="16" stroke="#a3d4ad" stroke-width="1.5"/>
+          <line x1="15" y1="22" x2="45" y2="22" stroke="#a3d4ad" stroke-width="1.5"/>
+          <line x1="15" y1="28" x2="35" y2="28" stroke="#a3d4ad" stroke-width="1.5"/>
+          <circle cx="44" cy="38" r="6" fill="#e8f5e9" stroke="#1a5928" stroke-width="1.5"/>
+          <text x="44" y="41" text-anchor="middle" font-size="8" font-weight="700" fill="#1a5928">💬</text>
+        </svg>
+      </div>
+      <div class="integ-src-label">Chat Memory<br>(MongoDB)</div>
+    </div>
+  </div>
+
+  <!-- Down Arrows -->
+  <div class="integ-darrows">
+    <div class="integ-darrow">▼</div>
+    <div class="integ-darrow">▼</div>
+    <div class="integ-darrow">▼</div>
+    <div class="integ-darrow">▼</div>
+  </div>
+
+  <!-- Central Process Box with side labels -->
+  <div style="position: relative; max-width: 820px; margin: 0 auto;">
+
+    <!-- Side: Structured Metadata -->
+    <div style="position: absolute; left: -10px; top: 50%; transform: translateY(-50%);">
+      <div class="integ-side-box">
+        <svg viewBox="0 0 40 36" width="30" height="28" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="32" height="32" rx="2" fill="#d6e2f0" stroke="#1B3A5C" stroke-width="1.5"/>
+          <line x1="4" y1="12" x2="36" y2="12" stroke="#1B3A5C" stroke-width="1"/>
+          <line x1="4" y1="22" x2="36" y2="22" stroke="#1B3A5C" stroke-width="1"/>
+          <line x1="20" y1="2" x2="20" y2="34" stroke="#1B3A5C" stroke-width="1"/>
+        </svg>
+        <div class="integ-side-text">Structured<br>Metadata</div>
+      </div>
+    </div>
+
+    <!-- Central -->
+    <div class="integ-process" style="margin: 0 140px;">
+      <div class="integ-process-title">ACARA Adaptive Pipeline</div>
+      <div class="integ-process-inner">
+        <div class="integ-pbox">
+          <svg viewBox="0 0 40 36" width="36" height="32" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="14" r="8" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+            <circle cx="12" cy="28" r="5" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+            <circle cx="28" cy="28" r="5" fill="#f0e8c8" stroke="#7B6B2B" stroke-width="1.5"/>
+            <line x1="16" y1="20" x2="13" y2="24" stroke="#7B6B2B" stroke-width="1"/>
+            <line x1="24" y1="20" x2="27" y2="24" stroke="#7B6B2B" stroke-width="1"/>
+          </svg>
+          <div class="integ-pbox-title">ARC Controller</div>
+          <div class="integ-pbox-sub">Dynamic Parameter Tuning</div>
+        </div>
+        <div class="integ-pbox">
+          <svg viewBox="0 0 40 36" width="36" height="32" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="20,4 36,18 28,18 28,32 12,32 12,18 4,18" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+            <circle cx="20" cy="22" r="4" fill="#1B5E5E" opacity="0.3"/>
+          </svg>
+          <div class="integ-pbox-title">Context Gate</div>
+          <div class="integ-pbox-sub">3-Stage Context Awareness</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side: Unstructured Data -->
+    <div style="position: absolute; right: -10px; top: 50%; transform: translateY(-50%);">
+      <div class="integ-side-box">
+        <svg viewBox="0 0 40 36" width="30" height="28" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6,28 Q4,28 4,24 Q4,18 8,18 Q8,10 16,10 Q18,4 24,4 Q30,4 32,10 Q38,10 38,18 Q42,18 40,24 Q40,28 36,28 Z" fill="#c8e6e6" stroke="#1B5E5E" stroke-width="1.5"/>
+        </svg>
+        <div class="integ-side-text">Unstructured<br>Data</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Down arrow to repository -->
+  <div class="integ-down-arrow-center" style="margin-top: 12px;">▼</div>
+
+  <!-- Bottom: Unified Response -->
+  <div class="integ-repo">Validated Response with Source Citations</div>
+
+</div>
+
+<div class="fig-caption">
+  <em>Figure 3.</em> Data Integration — heterogeneous sources flow through ACARA's adaptive pipeline to produce validated, cited responses
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     FIGURE 4: Mathematical Formulation of ACARA Pipeline
+     ═══════════════════════════════════════════════════════════════════════ -->
+<style>
+  /* Pipeline Flowchart */
+  .flow-diagram {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    background: #f4f5f7;
+    border: 1px solid #c8ccd4;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    margin-bottom: 12px;
+  }
+
+  .flow-node {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    min-width: 90px;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .flow-node-sub {
+    font-size: 9px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  .flow-connector {
+    font-size: 16px;
+    color: #5a5a6a;
+    padding: 0 6px;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  /* Diamond for gate decision */
+  .flow-diamond {
+    width: 120px;
+    height: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+  }
+
+  .flow-diamond-shape {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flow-diamond-text {
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1B3A5C;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* Branch container */
+  .flow-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+  }
+
+  .flow-branch-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .flow-branch-label {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .flow-branch-label.strong {
+    background: #d4edda;
+    color: #1a5928;
+    border: 1px solid #a3d4ad;
+  }
+
+  .flow-branch-label.weak {
+    background: #f0e8c8;
+    color: #5a4a2a;
+    border: 1px solid #cfc09a;
+  }
+
+  /* Math equations section */
+  .math-section {
+    max-width: 1100px;
+    margin: 20px auto 0;
+  }
+
+  .math-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1B3A5C;
+    margin-bottom: 16px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #c8ccd4;
+  }
+
+  .math-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .math-card {
+    background: #f8f9fb;
+    border: 1px solid #c8ccd4;
+    border-radius: 4px;
+    padding: 14px 18px;
+  }
+
+  .math-card.full {
+    grid-column: 1 / -1;
+  }
+
+  .math-card-step {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background: #1B5E5E;
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .math-card-step.blue { background: #1B3A5C; }
+  .math-card-step.gold { background: #7B6B2B; }
+  .math-card-step.teal { background: #1B5E5E; }
+  .math-card-step.red { background: #8B2252; }
+  .math-card-step.green { background: #1a5928; }
+
+  .math-card-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+
+  .math-eq {
+    font-family: 'Times New Roman', 'Georgia', serif;
+    font-size: 15px;
+    line-height: 2;
+    color: #1a1a2e;
+    padding: 6px 0;
+  }
+
+  .math-eq .var {
+    font-style: italic;
+    color: #1B3A5C;
+  }
+
+  .math-eq .fn {
+    font-weight: 700;
+    font-style: normal;
+    color: #1B5E5E;
+  }
+
+  .math-eq .const {
+    font-style: normal;
+    color: #8B2252;
+    font-weight: 600;
+  }
+
+  .math-eq .op {
+    font-style: normal;
+    color: #3a3a4a;
+    padding: 0 2px;
+  }
+
+  .math-eq .set {
+    font-style: normal;
+    font-weight: 600;
+    color: #7B6B2B;
+  }
+
+  .math-desc {
+    font-size: 10.5px;
+    color: #5a5a6a;
+    line-height: 1.5;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .math-where {
+    font-size: 11px;
+    color: #3a3a4a;
+    margin-top: 6px;
+    padding-left: 16px;
+    border-left: 2px solid #c8ccd4;
+    line-height: 1.8;
+    font-family: 'Times New Roman', 'Georgia', serif;
+  }
+
+  .math-where .var { font-style: italic; color: #1B3A5C; }
+  .math-where .const { color: #8B2252; font-weight: 600; }
+
+  @media (max-width: 800px) {
+    .math-grid { grid-template-columns: 1fr; }
+    .flow-row { flex-wrap: wrap; gap: 4px; justify-content: center; }
+    .flow-connector { padding: 0 2px; }
+  }
+</style>
+
+<div style="max-width: 1100px; margin: 48px auto 0; padding: 0 24px;">
+
+  <div class="appendix-header">
+    <div class="appendix-badge" style="background:#1B5E5E;">Figure 4</div>
+    <div class="appendix-title">Mathematical Formulation of the ACARA Pipeline</div>
+  </div>
+
+  <!-- ── Pipeline Flowchart ── -->
+  <div class="flow-diagram">
+
+    <!-- Main pipeline row -->
+    <div class="flow-row">
+      <div class="flow-node" style="background:#64748b;">
+        Query<br><span class="flow-node-sub"><em>q</em></span>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#1B3A5C;">
+        Embedding<br><span class="flow-node-sub"><em>e</em> = φ(<em>q</em>)</span>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#1B3A5C;">
+        Retrieve<br><span class="flow-node-sub">Top-<em>k</em><sub>arc</sub></span>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#7B6B2B; min-width:110px;">
+        Context Gate<br><span class="flow-node-sub"><em>G</em> = <em>S</em> ∧ <em>C</em> ∧ <em>F</em></span>
+      </div>
+      <div class="flow-connector">→</div>
+
+      <!-- Branch -->
+      <div class="flow-branch">
+        <!-- Strong path -->
+        <div class="flow-branch-row">
+          <div class="flow-branch-label strong">G = 1 (Strong)</div>
+          <div class="flow-connector" style="font-size:12px;">→</div>
+          <div class="flow-node" style="background:#059669; font-size:10px; padding:6px 10px; min-width:70px;">Credibility</div>
+        </div>
+        <!-- Weak path -->
+        <div class="flow-branch-row">
+          <div class="flow-branch-label weak">G = 0 (Weak) </div>
+          <div class="flow-connector" style="font-size:12px;">→</div>
+          <div class="flow-node" style="background:#d97706; font-size:10px; padding:6px 10px; min-width:70px;">Web Search</div>
+          <div class="flow-connector" style="font-size:12px;">→</div>
+          <div class="flow-node" style="background:#059669; font-size:10px; padding:6px 10px; min-width:70px;">Credibility</div>
+        </div>
+      </div>
+
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#1B5E5E;">
+        Generate<br><span class="flow-node-sub">LLM(<em>ctx, q</em>)</span>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#8B2252;">
+        Critic<br><span class="flow-node-sub"><em>V</em>(<em>r, ctx</em>)</span>
+      </div>
+      <div class="flow-connector">→</div>
+      <div class="flow-node" style="background:#1a1a2e;">
+        Output<br><span class="flow-node-sub"><em>r</em>*</span>
+      </div>
+    </div>
+
+    <!-- ARC feedback arrow -->
+    <div style="text-align:center; margin-top: 4px;">
+      <div style="display:inline-flex; align-items:center; gap:6px; padding:4px 16px; background:#ebedf0; border:1px solid #c8ccd4; border-radius:20px; font-size:10px; font-weight:700; color:#1B5E5E;">
+        ↻ ARC Feedback Loop — <span style="color:#7B6B2B;"><em>G</em> signal adjusts τ, <em>k</em>, <em>s</em>, <em>o</em> for next query</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Mathematical Equations ── -->
+  <div class="math-section">
+    <div class="math-section-title">Formal Definitions</div>
+
+    <div class="math-grid">
+
+      <!-- Eq 1: Query Embedding -->
+      <div class="math-card">
+        <span class="math-card-step blue">Step 1</span>
+        <div class="math-card-label">Query Encoding</div>
+        <div class="math-eq">
+          <span class="var">e</span><sub><span class="var">q</span></sub> <span class="op">=</span> <span class="fn">φ</span>(<span class="var">q</span>) <span class="op">∈</span> ℝ<sup><span class="var">d</span></sup>
+        </div>
+        <div class="math-desc">
+          φ : OpenAI text-embedding-ada-002 · d = 1536
+        </div>
+      </div>
+
+      <!-- Eq 2: Retrieval -->
+      <div class="math-card">
+        <span class="math-card-step blue">Step 2</span>
+        <div class="math-card-label">Adaptive Retrieval</div>
+        <div class="math-eq">
+          <span class="var">R</span> <span class="op">=</span> <span class="fn">TopK</span>(<span class="var">V</span>, <span class="var">e</span><sub><span class="var">q</span></sub>, <span class="var">k</span><sub>arc</sub>)
+        </div>
+        <div class="math-where">
+          <span class="var">V</span> = vector store (Pinecone / ChromaDB)<br>
+          <span class="var">k</span><sub>arc</sub> ∈ [<span class="const">2</span>, <span class="const">8</span>], default = <span class="const">3</span>
+        </div>
+      </div>
+
+      <!-- Eq 3: Similarity Gate -->
+      <div class="math-card">
+        <span class="math-card-step gold">Step 3a</span>
+        <div class="math-card-label">Similarity Gate</div>
+        <div class="math-eq">
+          <span class="var">S</span>(<span class="var">q</span>, <span class="var">d</span><sub><span class="var">i</span></sub>) <span class="op">=</span>
+          <span class="fn">sim</span>(<span class="var">e</span><sub><span class="var">q</span></sub>, <span class="var">e</span><sub><span class="var">d<sub>i</sub></span></sub>) <span class="op">=</span>
+          1 − <span class="var">dist</span><sub>cos</sub> <span class="op">≥</span> <span class="var">τ</span><sub>arc</sub>
+        </div>
+        <div class="math-where">
+          <span class="var">τ</span><sub>arc</sub> ∈ [<span class="const">0.35</span>, <span class="const">0.60</span>], default = <span class="const">0.45</span><br>
+          Pass if ∃ <span class="var">d</span><sub><span class="var">i</span></sub> ∈ <span class="var">R</span> such that <span class="var">S</span> ≥ <span class="var">τ</span>
+        </div>
+      </div>
+
+      <!-- Eq 4: Freshness Gate -->
+      <div class="math-card">
+        <span class="math-card-step gold">Step 3b</span>
+        <div class="math-card-label">Freshness Gate</div>
+        <div class="math-eq">
+          <span class="var">F</span>(<span class="var">d</span><sub><span class="var">i</span></sub>) <span class="op">=</span>
+          𝟙[<span class="var">t</span><sub>now</sub> − <span class="var">t</span><sub>stored</sub>(<span class="var">d</span><sub><span class="var">i</span></sub>) <span class="op">≤</span> <span class="const">72</span>h]
+        </div>
+        <div class="math-where">
+          Stale if &gt; 50% of chunks fail: |{<span class="var">d</span><sub><span class="var">i</span></sub> : ¬<span class="var">F</span>(<span class="var">d</span><sub><span class="var">i</span></sub>)}| &gt; |<span class="var">R</span>| / 2
+        </div>
+      </div>
+
+      <!-- Eq 5: Coverage Gate -->
+      <div class="math-card">
+        <span class="math-card-step gold">Step 3c</span>
+        <div class="math-card-label">LLM Coverage Gate</div>
+        <div class="math-eq">
+          <span class="var">C</span>(<span class="var">d</span><sub><span class="var">i</span></sub>, <span class="var">q</span>) <span class="op">=</span>
+          <span class="fn">LLM</span><sub>judge</sub>(<span class="var">d</span><sub><span class="var">i</span></sub>, <span class="var">q</span>) <span class="op">∈</span> {<span class="set">yes</span>, <span class="set">no</span>}
+        </div>
+        <div class="math-where">
+          Evaluated on top-<span class="const">2</span> documents only<br>
+          Pass if ∃ <span class="var">d</span><sub><span class="var">i</span></sub> : <span class="var">C</span>(<span class="var">d</span><sub><span class="var">i</span></sub>, <span class="var">q</span>) = <span class="set">yes</span>
+        </div>
+      </div>
+
+      <!-- Eq 6: Context Gate (combined) -->
+      <div class="math-card">
+        <span class="math-card-step gold">Step 3</span>
+        <div class="math-card-label">Context Awareness Gate — Combined Decision</div>
+        <div class="math-eq">
+          <span class="var">G</span>(<span class="var">q</span>, <span class="var">R</span>) <span class="op">=</span>
+          <span class="var">S</span> <span class="op">∧</span> <span class="var">C</span> <span class="op">∧</span> <span class="var">F</span>
+        </div>
+        <div class="math-eq" style="font-size:13px; padding-left:20px;">
+          <span class="var">G</span> = <span class="const">1</span> (Strong) <span class="op">→</span> route to <span class="fn">Credibility</span><br>
+          <span class="var">G</span> = <span class="const">0</span> (Weak) &nbsp;<span class="op">→</span> route to <span class="fn">WebSearch</span> → <span class="fn">Credibility</span>
+        </div>
+      </div>
+
+      <!-- Eq 7: ARC Update Rules -->
+      <div class="math-card full">
+        <span class="math-card-step teal">Feedback</span>
+        <div class="math-card-label">ARC Feedback Update Rules</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#5a4a2a; margin-bottom:6px; padding:2px 8px; background:#f0e8c8; border-radius:3px; display:inline-block;">When G = 0 (Weak Signal)</div>
+            <div class="math-eq" style="font-size:13px;">
+              <span class="var">τ</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">0.35</span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> − <span class="const">0.05</span>)<br>
+              <span class="var">k</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">8</span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> + <span class="const">1</span>)
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#1a5928; margin-bottom:6px; padding:2px 8px; background:#d4edda; border-radius:3px; display:inline-block;">When G = 1 (Strong Signal)</div>
+            <div class="math-eq" style="font-size:13px;">
+              <span class="var">τ</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">0.60</span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> + <span class="const">0.02</span>)<br>
+              <span class="var">k</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">3</span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> − <span class="const">1</span>)
+            </div>
+          </div>
+        </div>
+        <div class="math-desc">
+          Dynamic chunk sizing: |<span style="font-style:italic">q</span>| &gt; 20 words → <em>s</em> ← max(300, <em>s</em> − 500), &nbsp; |<span style="font-style:italic">q</span>| &lt; 6 words → <em>s</em> ← min(2000, <em>s</em> + 500)
+        </div>
+      </div>
+
+      <!-- Eq 8: Credibility -->
+      <div class="math-card">
+        <span class="math-card-step green">Step 4</span>
+        <div class="math-card-label">Credibility Scoring</div>
+        <div class="math-eq">
+          <span class="var">P</span><sub>cred</sub>(<span class="var">d</span><sub><span class="var">i</span></sub> | <span class="var">q</span>) <span class="op">=</span>
+          <span class="fn">LLM</span><sub>score</sub>(<span class="var">d</span><sub><span class="var">i</span></sub>, <span class="var">q</span>)
+        </div>
+        <div class="math-eq" style="font-size:13px;">
+          <span class="var">D</span><sub>credible</sub> <span class="op">=</span> {<span class="var">d</span><sub><span class="var">i</span></sub> ∈ <span class="var">D</span> : <span class="var">P</span><sub>cred</sub> = <span class="set">yes</span>}
+        </div>
+        <div class="math-desc">
+          Only credible chunks are written to long-term Vector Memory
+        </div>
+      </div>
+
+      <!-- Eq 9: Generation + Critic -->
+      <div class="math-card">
+        <span class="math-card-step red">Step 5–6</span>
+        <div class="math-card-label">Generation &amp; Critic Validation</div>
+        <div class="math-eq">
+          <span class="var">r</span> <span class="op">=</span> <span class="fn">LLM</span>(<span class="var">ctx</span>, <span class="var">q</span>, <span class="var">H</span>)
+        </div>
+        <div class="math-eq">
+          <span class="var">r</span>* <span class="op">=</span>
+          <span class="var">r</span> · 𝟙[<span class="fn">Critic</span>(<span class="var">r</span>, <span class="var">ctx</span>) = <span class="set">pass</span>]
+        </div>
+        <div class="math-where">
+          <span class="var">ctx</span> = ranked context from <span class="var">D</span><sub>credible</sub><br>
+          <span class="var">H</span> = conversation history (MongoDB)<br>
+          Critic checks: hallucination, grounding, relevance
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="fig-caption" style="margin-top:16px; margin-bottom:0;">
+    <em>Figure 4.</em> Formal mathematical formulation — ACARA's adaptive pipeline expressed as compositions of embedding, gating, retrieval, and validation functions with ARC feedback
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     APPENDIX A: System Workflow Pseudocode
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="appendix-section" style="margin-top: 48px;">
+
+  <div class="appendix-header">
+    <div class="appendix-badge">Appendix A</div>
+    <div class="appendix-title">System Workflow Pseudocode</div>
+  </div>
+
+  <!-- ARC Logic -->
+  <div class="pseudo-block">
+    <div class="pseudo-label">
+      <span class="pseudo-label-tag">ARC</span>
+      Adaptive Retrieval Controller — Feedback-Driven Parameter Adjustment
+    </div>
+    <div class="pseudo-code"><span class="keyword">class</span> <span class="fn">ARCController</span>:
+    <span class="comment">// Default parameters (initialized at session start)</span>
+    similarity_threshold ← <span class="val">0.45</span>
+    top_k               ← <span class="val">3</span>
+    chunk_size           ← <span class="val">1000</span>
+    chunk_overlap        ← <span class="val">200</span>
+
+    <span class="keyword">function</span> <span class="fn">adjust_on_weak_context</span>():
+        <span class="comment">// Called when Context Awareness Gate signals WEAK</span>
+        similarity_threshold ← <span class="fn">max</span>(<span class="val">0.35</span>, threshold − <span class="val">0.05</span>)   <span class="comment">// broaden recall</span>
+        top_k                ← <span class="fn">min</span>(<span class="val">8</span>,    top_k + <span class="val">1</span>)          <span class="comment">// retrieve more chunks</span>
+
+    <span class="keyword">function</span> <span class="fn">adjust_on_strong_context</span>():
+        <span class="comment">// Called when Context Awareness Gate signals STRONG</span>
+        similarity_threshold ← <span class="fn">min</span>(<span class="val">0.60</span>, threshold + <span class="val">0.02</span>)   <span class="comment">// tighten precision</span>
+        <span class="keyword">if</span> top_k > <span class="val">3</span>: top_k ← top_k − <span class="val">1</span>                   <span class="comment">// decay toward default</span>
+
+    <span class="keyword">function</span> <span class="fn">adjust_chunk_size</span>(query):
+        word_count ← <span class="fn">len</span>(query.split())
+        <span class="keyword">if</span> word_count > <span class="val">20</span>:                                <span class="comment">// complex query</span>
+            chunk_size ← <span class="fn">max</span>(<span class="val">300</span>, chunk_size − <span class="val">500</span>)       <span class="comment">// smaller, focused chunks</span>
+            overlap    ← <span class="fn">max</span>(<span class="val">50</span>,  overlap − <span class="val">25</span>)
+        <span class="keyword">elif</span> word_count < <span class="val">6</span>:                               <span class="comment">// simple query</span>
+            chunk_size ← <span class="fn">min</span>(<span class="val">2000</span>, chunk_size + <span class="val">500</span>)     <span class="comment">// larger context windows</span>
+            overlap    ← <span class="fn">min</span>(<span class="val">400</span>,  overlap + <span class="val">25</span>)</div>
+  </div>
+
+  <!-- Routing Decisions -->
+  <div class="pseudo-block">
+    <div class="pseudo-label">
+      <span class="pseudo-label-tag">ROUTING</span>
+      Pipeline Routing Decisions (Context Awareness Gate → Conditional Edges)
+    </div>
+    <div class="pseudo-code"><span class="keyword">function</span> <span class="fn">grade_documents_node</span>(state):
+    documents  ← state.documents
+    distances  ← state.distances
+    threshold  ← ARC.similarity_threshold
+
+    <span class="comment">// Gate 1: Similarity Check</span>
+    similarity_pass ← <span class="keyword">any</span>( (1 − d) ≥ threshold <span class="keyword">for</span> d <span class="keyword">in</span> distances )
+
+    <span class="comment">// Gate 2: Freshness Check (72-hour staleness window)</span>
+    freshness_ok ← stale_count ≤ <span class="fn">len</span>(metadatas) / <span class="val">2</span>
+
+    <span class="comment">// Gate 3: LLM Coverage Verification (top-2 documents)</span>
+    coverage_pass ← <span class="keyword">false</span>
+    <span class="keyword">if</span> similarity_pass:
+        <span class="keyword">for</span> doc <span class="keyword">in</span> documents[:<span class="val">2</span>]:
+            <span class="keyword">if</span> <span class="fn">LLM.judge_coverage</span>(doc, query) == <span class="val">"yes"</span>:
+                coverage_pass ← <span class="keyword">true</span>
+                <span class="keyword">break</span>
+
+    context_strong ← similarity_pass <span class="keyword">AND</span> coverage_pass <span class="keyword">AND</span> freshness_ok
+
+    <span class="keyword">if</span> context_strong:
+        ARC.<span class="fn">adjust_on_strong_context</span>()
+        <span class="keyword">route →</span> <span class="fn">credibility_node</span>              <span class="comment">// proceed to Credibility Scoring</span>
+    <span class="keyword">else</span>:
+        ARC.<span class="fn">adjust_on_weak_context</span>()
+        <span class="keyword">route →</span> <span class="fn">web_search_node</span>                <span class="comment">// fallback to External Knowledge</span>
+
+<span class="comment">// Full Pipeline Graph (LangGraph StateGraph):</span>
+<span class="comment">//   retrieve → grade → [web_search | credibility] → generate → critic → END</span>
+<span class="comment">//                        ↳ web_search → credibility → generate → critic → END</span></div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     APPENDIX B: Hyperparameters
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="appendix-section">
+
+  <div class="appendix-header">
+    <div class="appendix-badge">Appendix B</div>
+    <div class="appendix-title">Hyperparameters</div>
+  </div>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Default Value</th>
+        <th>Min Bound</th>
+        <th>Max Bound</th>
+        <th>Adjustment Rule</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">similarity_threshold</span></td>
+        <td><span class="mono">0.45</span></td>
+        <td><span class="range">0.35</span></td>
+        <td><span class="range">0.60</span></td>
+        <td>WEAK: −0.05 &nbsp;|&nbsp; STRONG: +0.02</td>
+      </tr>
+      <tr>
+        <td><span class="mono">top_k</span></td>
+        <td><span class="mono">3</span></td>
+        <td><span class="range">2</span></td>
+        <td><span class="range">8</span></td>
+        <td>WEAK: +1 &nbsp;|&nbsp; STRONG: −1 (min 3)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">chunk_size</span></td>
+        <td><span class="mono">1000</span></td>
+        <td><span class="range">300</span></td>
+        <td><span class="range">2000</span></td>
+        <td>Long query (&gt;20 words): −500 &nbsp;|&nbsp; Short (&lt;6): +500</td>
+      </tr>
+      <tr>
+        <td><span class="mono">chunk_overlap</span></td>
+        <td><span class="mono">200</span></td>
+        <td><span class="range">50</span></td>
+        <td><span class="range">400</span></td>
+        <td>Long query: −25 &nbsp;|&nbsp; Short: +25</td>
+      </tr>
+      <tr>
+        <td><span class="mono">FRESHNESS_HOURS</span></td>
+        <td><span class="mono">72</span></td>
+        <td colspan="2" style="text-align:center; color:#6a6a7a;">—</td>
+        <td>Chunks older than 72h flagged as stale</td>
+      </tr>
+      <tr>
+        <td><span class="mono">coverage_docs</span></td>
+        <td><span class="mono">2</span></td>
+        <td colspan="2" style="text-align:center; color:#6a6a7a;">—</td>
+        <td>Top-2 documents assessed by LLM for coverage</td>
+      </tr>
+      <tr>
+        <td><span class="mono">LLM model</span></td>
+        <td><span class="mono">gpt-4o-mini</span></td>
+        <td colspan="2" style="text-align:center; color:#6a6a7a;">—</td>
+        <td>Temperature: 0 (deterministic generation)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">web_search_results</span></td>
+        <td><span class="mono">5</span></td>
+        <td colspan="2" style="text-align:center; color:#6a6a7a;">—</td>
+        <td>Tavily search returns max 5 results per query</td>
+      </tr>
+      <tr>
+        <td><span class="mono">text_splitter</span></td>
+        <td><span class="mono">Recursive</span></td>
+        <td colspan="2" style="text-align:center; color:#6a6a7a;">—</td>
+        <td>Separators: \n\n → \n → . → ! → ? → space</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-note">
+    * All ARC parameters are thread-safe (protected by threading.Lock). Values sourced from <code>arc.py</code> and <code>agent.py</code>.
+  </div>
+
+  <!-- ── Hyperparameter Mathematical Formulas ── -->
+  <div style="margin-top: 28px;">
+    <div class="math-section-title">Hyperparameter Recurrence Relations</div>
+
+    <div class="math-grid">
+
+      <!-- ═══ SIMILARITY THRESHOLD τ ═══ -->
+      <div class="math-card full" style="border-left: 4px solid #1B3A5C;">
+        <span class="math-card-step blue">θ₁</span>
+        <div class="math-card-label">Similarity Threshold — τ<sub>arc</sub></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#5a4a2a; margin-bottom:6px; padding:2px 8px; background:#f0e8c8; border-radius:3px; display:inline-block;">Weak Context (G = 0)</div>
+            <div class="math-eq">
+              <span class="var">τ</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">τ<sub>min</sub></span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> − <span class="const">Δτ<sub>↓</sub></span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> max(<span class="const">0.35</span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> − <span class="const">0.05</span>)
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#1a5928; margin-bottom:6px; padding:2px 8px; background:#d4edda; border-radius:3px; display:inline-block;">Strong Context (G = 1)</div>
+            <div class="math-eq">
+              <span class="var">τ</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">τ<sub>max</sub></span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> + <span class="const">Δτ<sub>↑</sub></span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> min(<span class="const">0.60</span>, <span class="var">τ</span><sup>(<span class="var">t</span>)</sup> + <span class="const">0.02</span>)
+            </div>
+          </div>
+        </div>
+        <div class="math-where" style="margin-top:10px;">
+          Domain: <span class="var">τ</span> ∈ [<span class="const">0.35</span>, <span class="const">0.60</span>] &nbsp; · &nbsp;
+          Initialization: <span class="var">τ</span><sup>(0)</sup> = <span class="const">0.45</span> &nbsp; · &nbsp;
+          Step ratio: Δτ<sub>↓</sub> / Δτ<sub>↑</sub> = <span class="const">0.05</span> / <span class="const">0.02</span> = 2.5× (aggressive broadening, conservative tightening)<br>
+          Usage: cosine similarity check — <span class="var">S</span>(<span class="var">q</span>, <span class="var">d<sub>i</sub></span>) = 1 − <span class="var">dist</span><sub>cos</sub>(<span class="var">e<sub>q</sub></span>, <span class="var">e<sub>d<sub>i</sub></sub></span>) ≥ <span class="var">τ</span><sub>arc</sub>
+        </div>
+        <div class="math-desc" style="margin-top:8px;">
+          Convergence: After n consecutive weak signals, τ<sup>(n)</sup> = max(0.35, 0.45 − 0.05n). &nbsp; Saturates at floor after 2 weak signals.
+          After n consecutive strong signals, τ<sup>(n)</sup> = min(0.60, 0.45 + 0.02n). &nbsp; Saturates at ceiling after 8 strong signals.
+        </div>
+      </div>
+
+      <!-- ═══ TOP-K k ═══ -->
+      <div class="math-card full" style="border-left: 4px solid #7B6B2B;">
+        <span class="math-card-step gold">θ₂</span>
+        <div class="math-card-label">Top-K Retrieval Count — k<sub>arc</sub></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#5a4a2a; margin-bottom:6px; padding:2px 8px; background:#f0e8c8; border-radius:3px; display:inline-block;">Weak Context (G = 0)</div>
+            <div class="math-eq">
+              <span class="var">k</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">k<sub>max</sub></span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> + <span class="const">1</span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> min(<span class="const">8</span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> + <span class="const">1</span>)
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#1a5928; margin-bottom:6px; padding:2px 8px; background:#d4edda; border-radius:3px; display:inline-block;">Strong Context (G = 1)</div>
+            <div class="math-eq">
+              <span class="var">k</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">k<sub>default</sub></span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> − <span class="const">1</span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> max(<span class="const">3</span>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup> − <span class="const">1</span>)
+            </div>
+          </div>
+        </div>
+        <div class="math-where" style="margin-top:10px;">
+          Domain: <span class="var">k</span> ∈ {<span class="const">2</span>, <span class="const">3</span>, <span class="const">4</span>, <span class="const">5</span>, <span class="const">6</span>, <span class="const">7</span>, <span class="const">8</span>} ⊂ ℤ &nbsp; · &nbsp;
+          Initialization: <span class="var">k</span><sup>(0)</sup> = <span class="const">3</span> &nbsp; · &nbsp;
+          Decay floor: <span class="const">k<sub>default</sub></span> = 3 (not <span class="const">k<sub>min</sub></span> = 2)<br>
+          Note: Strong signal decays <span class="var">k</span> toward <span class="const">3</span> (default), not toward <span class="const">2</span> (minimum). This preserves baseline retrieval depth.
+        </div>
+        <div class="math-desc" style="margin-top:8px;">
+          Retrieval set: R = {d₁, d₂, ..., d<sub>k</sub>} where d<sub>i</sub> are ranked by cosine similarity to e<sub>q</sub>. &nbsp;
+          More chunks (↑k) increases recall but adds noise; fewer (↓k) improves precision.
+        </div>
+      </div>
+
+      <!-- ═══ CHUNK SIZE s ═══ -->
+      <div class="math-card full" style="border-left: 4px solid #1B5E5E;">
+        <span class="math-card-step teal">θ₃</span>
+        <div class="math-card-label">Dynamic Chunk Size — s<sub>arc</sub> and Overlap — o<sub>arc</sub></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#1B5E5E; margin-bottom:6px; padding:2px 8px; background:#c8e6e6; border-radius:3px; display:inline-block;">Complex Query (|q| &gt; 20 words)</div>
+            <div class="math-eq">
+              <span class="var">s</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">s<sub>min</sub></span>, <span class="var">s</span><sup>(<span class="var">t</span>)</sup> − <span class="const">Δs</span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> max(<span class="const">300</span>, <span class="var">s</span><sup>(<span class="var">t</span>)</sup> − <span class="const">500</span>)
+            </div>
+            <div class="math-eq" style="font-size:12px; margin-top:4px;">
+              <span class="var">o</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> max(<span class="const">50</span>, <span class="var">o</span><sup>(<span class="var">t</span>)</sup> − <span class="const">25</span>)
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#64748b; margin-bottom:6px; padding:2px 8px; background:#e2e8f0; border-radius:3px; display:inline-block;">Simple Query (|q| &lt; 6 words)</div>
+            <div class="math-eq">
+              <span class="var">s</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">s<sub>max</sub></span>, <span class="var">s</span><sup>(<span class="var">t</span>)</sup> + <span class="const">Δs</span>)
+            </div>
+            <div class="math-eq" style="font-size:13px; color:#5a5a6a;">
+              <span class="op">=</span> min(<span class="const">2000</span>, <span class="var">s</span><sup>(<span class="var">t</span>)</sup> + <span class="const">500</span>)
+            </div>
+            <div class="math-eq" style="font-size:12px; margin-top:4px;">
+              <span class="var">o</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span> min(<span class="const">400</span>, <span class="var">o</span><sup>(<span class="var">t</span>)</sup> + <span class="const">25</span>)
+            </div>
+          </div>
+        </div>
+        <div class="math-where" style="margin-top:10px;">
+          Domain: <span class="var">s</span> ∈ [<span class="const">300</span>, <span class="const">2000</span>] chars &nbsp; · &nbsp;
+          Overlap: <span class="var">o</span> ∈ [<span class="const">50</span>, <span class="const">400</span>] chars &nbsp; · &nbsp;
+          Initialization: <span class="var">s</span><sup>(0)</sup> = <span class="const">1000</span>, <span class="var">o</span><sup>(0)</sup> = <span class="const">200</span><br>
+          Trigger condition: |<span class="var">q</span>| = word count of query string; &nbsp; 6 ≤ |<span class="var">q</span>| ≤ 20 → no adjustment<br>
+          Chunking function: <span style="color:#1B5E5E; font-weight:700;">RecursiveCharacterTextSplitter</span>(s, o, separators=["\n\n", "\n", ". ", "! ", "? ", " "])
+        </div>
+        <div class="math-desc" style="margin-top:8px;">
+          Intuition: Complex multi-part queries benefit from smaller, focused chunks for precise retrieval.
+          Simple keyword queries benefit from larger context windows to capture broader information.
+          The overlap parameter maintains continuity between adjacent chunks to prevent information loss at boundaries.
+        </div>
+      </div>
+
+      <!-- ═══ Combined Update Function ═══ -->
+      <div class="math-card full" style="background:#f0f2f5; border:2px solid #1B3A5C;">
+        <span class="math-card-step blue">Σ</span>
+        <div class="math-card-label">Combined ARC State Transition Function</div>
+        <div class="math-eq" style="text-align:center; font-size:16px;">
+          <span class="fn">ARC</span><sup>(<span class="var">t</span>+1)</sup> <span class="op">=</span>
+          <span class="fn">Ψ</span>(<span class="var">τ</span><sup>(<span class="var">t</span>)</sup>, <span class="var">k</span><sup>(<span class="var">t</span>)</sup>, <span class="var">s</span><sup>(<span class="var">t</span>)</sup>, <span class="var">o</span><sup>(<span class="var">t</span>)</sup>, <span class="var">G</span><sup>(<span class="var">t</span>)</sup>, |<span class="var">q</span><sup>(<span class="var">t</span>)</sup>|)
+        </div>
+        <div class="math-eq" style="text-align:center; font-size:13px; margin-top:4px;">
+          where &nbsp; <span class="fn">Ψ</span> : [<span class="const">0.35</span>, <span class="const">0.60</span>] × {<span class="const">2</span>…<span class="const">8</span>} × [<span class="const">300</span>, <span class="const">2000</span>] × [<span class="const">50</span>, <span class="const">400</span>] × {<span class="const">0</span>, <span class="const">1</span>} × ℤ<sup>+</sup> → <span class="fn">ARC</span><sup>(<span class="var">t</span>+1)</sup>
+        </div>
+        <div class="math-where" style="margin-top:10px; text-align:center; border-left:none; padding-left:0;">
+          All parameters are bounded (clamped) and self-correcting. &nbsp;
+          The system converges to stable operating points under consistent feedback signals. &nbsp;
+          Reset: <span class="fn">ARC</span><sup>(0)</sup> = (<span class="const">0.45</span>, <span class="const">3</span>, <span class="const">1000</span>, <span class="const">200</span>) at each new session.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     APPENDIX C: Sample Queries and Outputs
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="appendix-section">
+
+  <div class="appendix-header">
+    <div class="appendix-badge">Appendix C</div>
+    <div class="appendix-title">Sample Queries and Outputs</div>
+  </div>
+
+  <!-- Query 1: Strong Context Path -->
+  <div class="query-card">
+    <div class="query-card-header">Query 1 — Strong Context Path (Direct Retrieval)</div>
+    <div class="query-card-body">
+      <div class="query-row">
+        <div class="query-row-label">Input Query</div>
+        <div class="query-row-content">"What is the role of the Adaptive Retrieval Controller in ACARA?"</div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC Parameters</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.45</span>
+            <span class="arc-tag">top_k: 3</span>
+            <span class="arc-tag">chunk_size: 1000</span>
+          </div>
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Gate Decision</div>
+        <div class="query-row-content">
+          Similarity: <code>0.82 ≥ 0.45</code> ✓ &nbsp;|&nbsp; Coverage: LLM → <code>"yes"</code> ✓ &nbsp;|&nbsp; Freshness: <code>4h ago</code> ✓<br>
+          <span class="route-tag strong">CONTEXT STRONG</span> → route to Credibility Scoring
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Retrieved Context</div>
+        <div class="query-row-content">
+          <em>"The Adaptive Retrieval Controller (ARC) is a thread-safe singleton that dynamically adjusts similarity_threshold, top_k, chunk_size, and chunk_overlap based on pipeline feedback signals. When context is weak, it broadens recall by lowering the threshold and increasing top_k. When context is strong, it tightens precision..."</em>
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Validated Response</div>
+        <div class="query-row-content">
+          The Adaptive Retrieval Controller (ARC) serves as the self-optimizing core of ACARA. It dynamically tunes four key retrieval parameters — similarity threshold, top-k, chunk size, and overlap — based on real-time feedback from the Context Awareness Gate. When retrieved context is judged weak, ARC broadens the search by lowering the similarity threshold (−0.05) and retrieving more chunks (+1). Conversely, when context is strong, it tightens precision (+0.02) and decays top-k back toward the default. This closed-loop mechanism ensures retrieval quality improves with each successive query.
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC After Query</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.47 (+0.02)</span>
+            <span class="arc-tag">top_k: 3</span>
+            <span class="arc-tag">adjustments: 1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Query 2: Weak Context Path -->
+  <div class="query-card">
+    <div class="query-card-header">Query 2 — Weak Context Path (Web Search Fallback)</div>
+    <div class="query-card-body">
+      <div class="query-row">
+        <div class="query-row-label">Input Query</div>
+        <div class="query-row-content">"What are the latest advancements in retrieval-augmented generation for enterprise use cases?"</div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC Parameters</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.47</span>
+            <span class="arc-tag">top_k: 3</span>
+            <span class="arc-tag">chunk_size: 500 (long query)</span>
+          </div>
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Gate Decision</div>
+        <div class="query-row-content">
+          Similarity: <code>0.31 < 0.47</code> ✗ &nbsp;|&nbsp; Coverage: skipped &nbsp;|&nbsp; Freshness: <code>n/a</code><br>
+          <span class="route-tag weak">CONTEXT WEAK</span> (low similarity) → route to External Knowledge Source (Tavily)
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Retrieved Context</div>
+        <div class="query-row-content">
+          <em>Tavily returned 5 web results → Dynamic Chunking Module split into 8 chunks (size=500, overlap=175) → Credibility Scoring passed 5/8 chunks → 5 credible chunks stored in Vector Memory for future retrieval.</em>
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Validated Response</div>
+        <div class="query-row-content">
+          Recent advancements in RAG for enterprise include: (1) Adaptive retrieval systems that dynamically adjust parameters based on query complexity, (2) Multi-stage context grading with similarity, coverage, and freshness gates, (3) Credibility scoring pipelines that filter hallucinated content before storage, and (4) Hybrid architectures combining vector search with knowledge graph enrichment. These approaches reduce hallucination rates from ~20% in static RAG to under 5% in production systems.
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC After Query</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.42 (−0.05)</span>
+            <span class="arc-tag">top_k: 4 (+1)</span>
+            <span class="arc-tag">adjustments: 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Query 3: Critic Rejection -->
+  <div class="query-card">
+    <div class="query-card-header">Query 3 — Critic Validation (Output Quality Check)</div>
+    <div class="query-card-body">
+      <div class="query-row">
+        <div class="query-row-label">Input Query</div>
+        <div class="query-row-content">"How does ACARA handle stale documents?"</div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC Parameters</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.42</span>
+            <span class="arc-tag">top_k: 4</span>
+            <span class="arc-tag">chunk_size: 1500 (short query)</span>
+          </div>
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Gate Decision</div>
+        <div class="query-row-content">
+          Similarity: <code>0.68 ≥ 0.42</code> ✓ &nbsp;|&nbsp; Coverage: LLM → <code>"yes"</code> ✓ &nbsp;|&nbsp; Freshness: <code>2h ago</code> ✓<br>
+          <span class="route-tag strong">CONTEXT STRONG</span> → route to Credibility Scoring
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Pipeline Steps</div>
+        <div class="query-row-content">
+          <code>retrieve</code> → <code>grade</code> → <code>credibility</code> → <code>generate</code> → <code>critic</code><br>
+          Critic Validator: checked for hallucinations, verified grounding against source chunks → <code>"yes"</code> (no hallucinations detected)
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">Validated Response</div>
+        <div class="query-row-content">
+          ACARA handles stale documents through its 3-gate Context Awareness system. The Freshness Check gate examines the ISO timestamp of each retrieved chunk against a 72-hour staleness window (<code>FRESHNESS_HOURS = 72</code>). If more than half the retrieved chunks exceed this age threshold, the freshness flag is set to <code>false</code>, and the overall context is judged as WEAK — triggering the web search fallback to obtain fresh information. Additionally, newly retrieved web content is scored for credibility before being stored in Vector Memory, ensuring the knowledge base is continuously refreshed with verified, up-to-date information.
+        </div>
+      </div>
+      <div class="query-row">
+        <div class="query-row-label">ARC After Query</div>
+        <div class="query-row-content">
+          <div class="arc-snapshot">
+            <span class="arc-tag">threshold: 0.44 (+0.02)</span>
+            <span class="arc-tag">top_k: 3 (−1)</span>
+            <span class="arc-tag">adjustments: 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

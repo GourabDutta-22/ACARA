@@ -1,12 +1,99 @@
+# ─────────────────────────────────────────────
+#  Node.js / Frontend
+# ─────────────────────────────────────────────
 node_modules/
 dist/
-.env
-.env.local
-.DS_Store
+package-lock.json
+.cache/
+.parcel-cache/
 
-# Backend
+# ─────────────────────────────────────────────
+#  Python / Backend
+# ─────────────────────────────────────────────
 venv/
+.venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+build/
+*.so
+
+# ─────────────────────────────────────────────
+#  Environment / Secrets (never commit real keys)
+# ─────────────────────────────────────────────
+.env
+.env.local
+.env.production
+!.env.example
+
+# ─────────────────────────────────────────────
+#  Vector Store / Database files
+# ─────────────────────────────────────────────
 .chroma/
+chroma_db/
 *.db
+*.sqlite
+*.sqlite3
+
+# ─────────────────────────────────────────────
+#  Evaluation artifacts (logs, raw results)
+# ─────────────────────────────────────────────
+backend/eval_results_*.json
+backend/eval_*.log
+backend/ingest_remaining.log
+backend/debug_out.txt
+backend/temp.md
+backend/.deepeval/
+
+# ─────────────────────────────────────────────
+#  Test / Scratch files
+# ─────────────────────────────────────────────
+backend/test.py
+backend/test.pdf
+backend/test_*.py
+backend/debug_query.py
+backend/make_pdf.py
+backend/query_test.py
+backend/view_db.py
+backend/ques.jsonl
+backend/ques.txt
+backend/eval_benchmark_backup.py
+
+# ─────────────────────────────────────────────
+#  Data ingestion scripts (internal use only)
+# ─────────────────────────────────────────────
+backend/ingest_medical_data.py
+backend/ingest_all_medical_data.py
+backend/ingest_remaining.log
+backend/fast_ingest.py
+
+# ─────────────────────────────────────────────
+#  Misc project-specific files not needed
+# ─────────────────────────────────────────────
+ACARA_Presentation.pptx
+create_ppt.py
+3d_pinecone_database.py
+ilovepdf_split/
+file_tree.txt
+Links/
+
+# ─────────────────────────────────────────────
+#  OS / Editor
+# ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ─────────────────────────────────────────────
+#  Logs
+# ─────────────────────────────────────────────
+*.log
+logs/

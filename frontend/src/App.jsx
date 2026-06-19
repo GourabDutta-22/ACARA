@@ -10,8 +10,8 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 import PipelineVisualizer from "./PipelineVisualizer";
 import ARCPanel from "./ARCPanel";
 import UploadPanel from "./UploadPanel";
@@ -19,10 +19,10 @@ import UploadPanel from "./UploadPanel";
 import { API } from "./config";
 
 const SUGGESTED_QUERIES = [
-  "What is LangGraph and how does it work?",
-  "Explain adaptive retrieval in RAG systems",
-  "How does vector similarity search work?",
-  "What are the benefits of dynamic chunking?",
+  "What are the symptoms of Type 2 Diabetes?",
+  "Explain the Sepsis Six treatment protocol",
+  "What is the difference between bacterial and viral pneumonia?",
+  "What are the treatment guidelines for hypertension?",
 ];
 
 let sessionCounter = 1;
@@ -366,8 +366,9 @@ function App() {
     <>
       {showSplash && (
         <div className="splash-screen">
-          <div className="splash-logo">⚡️</div>
-          <div className="splash-title">ACARA</div>
+          <div className="splash-logo">⚕️</div>
+          <div className="splash-title">MedAI</div>
+          <div className="splash-subtitle">Medical Knowledge Assistant</div>
         </div>
       )}
       <div className="app-shell" style={{ display: showSplash ? "none" : "flex" }}>
@@ -375,10 +376,10 @@ function App() {
       <div className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
         <div className="sidebar-inner">
           <div className="sidebar-header">
-            <div className="sidebar-logo">⚡</div>
+            <div className="sidebar-logo">⚕️</div>
             <div>
-              <div className="sidebar-title">ACARA</div>
-              <div className="sidebar-subtitle">Adaptive Context-Aware</div>
+              <div className="sidebar-title">MedAI</div>
+              <div className="sidebar-subtitle">Medical Knowledge Assistant</div>
             </div>
           </div>
 
@@ -436,7 +437,7 @@ function App() {
           <button className="btn-icon" onClick={() => setSidebarOpen((p) => !p)} title="Toggle sidebar">
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <span className="topbar-title">Adaptive Context-Aware RAG</span>
+          <span className="topbar-title">MedAI — Medical Knowledge Assistant</span>
 
           <div style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center" }}>
             <div className="pipeline-badge">
@@ -475,25 +476,30 @@ function App() {
                 </div>
               ) : messages.length === 0 ? (
                 <div className="empty-state">
-                  <div className="empty-logo">⚡️</div>
+                  <div className="empty-logo">⚕️</div>
                   <h1 className="empty-title">How can I help you today?</h1>
+                  <p className="empty-subtitle">Ask about diseases, symptoms, treatments, pharmacology, or clinical guidelines</p>
                   
                   <div className="empty-chips">
-                    <div className="chip" onClick={() => { setInput("What is the score of Machine Learning in SHL?"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
-                      <span className="chip-title">Find a specific fact</span>
-                      <span className="chip-desc">Ask about scores or data from your PDFs</span>
+                    <div className="chip" onClick={() => { setInput("What are the symptoms and treatment for Type 2 Diabetes?"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
+                      <span className="chip-icon">🩺</span>
+                      <span className="chip-title">Disease & Symptoms</span>
+                      <span className="chip-desc">Ask about conditions, signs, and clinical presentation</span>
                     </div>
-                    <div className="chip" onClick={() => { setInput("Provide a brief summary of the most recently uploaded document"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
-                      <span className="chip-title">Summarize documents</span>
-                      <span className="chip-desc">Get a high-level overview of injected knowledge</span>
+                    <div className="chip" onClick={() => { setInput("Explain the Sepsis Six treatment protocol"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
+                      <span className="chip-icon">🚑</span>
+                      <span className="chip-title">Emergency Protocols</span>
+                      <span className="chip-desc">Sepsis, anaphylaxis, MI, and other critical care guidelines</span>
                     </div>
-                    <div className="chip" onClick={() => { setInput("Explain how the Adaptive RAG pipeline works"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
-                      <span className="chip-title">Understand the Agent</span>
-                      <span className="chip-desc">Learn about the internal LangGraph architecture</span>
+                    <div className="chip" onClick={() => { setInput("What are the drug interactions with warfarin?"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
+                      <span className="chip-icon">💊</span>
+                      <span className="chip-title">Pharmacology</span>
+                      <span className="chip-desc">Drug mechanisms, dosages, and interaction warnings</span>
                     </div>
-                    <div className="chip" onClick={() => { setInput("Search the web for the latest news on Agentic RAG"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
-                      <span className="chip-title">Trigger Web Search</span>
-                      <span className="chip-desc">Force the agent to fallback to external knowledge</span>
+                    <div className="chip" onClick={() => { setInput("Upload a clinical PDF and summarize the key findings"); setTimeout(() => textareaRef.current?.focus(), 10); }}>
+                      <span className="chip-icon">📋</span>
+                      <span className="chip-title">Analyse Clinical PDF</span>
+                      <span className="chip-desc">Upload guidelines, research papers, or patient notes</span>
                     </div>
                   </div>
                 </div>
@@ -502,7 +508,7 @@ function App() {
                   {messages.map((msg, idx) => (
                     <div key={idx} className={`message-row ${msg.role}`}>
                       <div className={`avatar ${msg.role === "user" ? "user" : "ai"}`}>
-                        {msg.role === "user" ? "U" : "AI"}
+                        {msg.role === "user" ? "U" : "Md"}
                       </div>
                       <div className={`message-bubble ${msg.role === "user" ? "user" : "ai"}`}>
                         {msg.role === "ai" && msg.webFallback !== undefined && (
@@ -511,9 +517,7 @@ function App() {
                           </div>
                         )}
                         {msg.role === "ai" ? (
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {msg.content}
-                          </ReactMarkdown>
+                          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(msg.content || "")) }} />
                         ) : (
                           msg.content
                         )}
@@ -603,7 +607,7 @@ function App() {
                   </button>
                 </div>
                 <p className="input-hint">
-                  Adaptive RAG · Dynamic Chunking · Credibility Scoring · ARC
+                  ⚕️ MedAI · Evidence-Based · Credibility Scored · ARC · For educational purposes only
                 </p>
               </div>
             </div>
@@ -626,15 +630,6 @@ function App() {
               </div>
               <ARCPanel externalParams={arcParams} />
 
-              {/* Upload Panel */}
-              <div className="panel-section-title" style={{ marginTop: 8 }}>
-                Inject Knowledge
-              </div>
-              <UploadPanel
-                onUploaded={() => {
-                  fetchStats();
-                }}
-              />
             </div>
           </div>
         </div>
@@ -645,7 +640,7 @@ function App() {
         <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <span className="modal-title">📄 Inject into Vector Memory</span>
+              <span className="modal-title">📋 Inject Clinical Document into Memory</span>
               <button className="btn-modal-close" onClick={() => setShowUploadModal(false)}>
                 ✕
               </button>
