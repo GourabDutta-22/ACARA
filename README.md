@@ -156,7 +156,7 @@ ARC is a **thread-safe singleton** that continuously learns from pipeline outcom
 
 ## 🆚 ACARA vs. Baseline RAG — Benchmark Results
 
-Evaluated on a **500-question medical QA dataset** using GPT-4o-mini as the judge:
+Evaluated on a **500-question medical QA dataset** using **DeepEval (RAGAS Answer Correctness metrics)** with GPT-4o-mini as the judge:
 
 | Metric | Baseline RAG | ACARA | Δ |
 |---|---|---|---|
