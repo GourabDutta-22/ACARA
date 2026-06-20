@@ -9,7 +9,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![LangChain](https://img.shields.io/badge/LangChain-LCEL-green?style=flat-square)](https://www.langchain.com)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?style=flat-square&logo=openai)](https://openai.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 </div>
 
@@ -326,7 +326,7 @@ python eval_benchmark.py --dataset your_dataset.jsonl --n 500
 
 ## 📝 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+All Rights Reserved — see [LICENSE](LICENSE) for details. This project is proprietary and cannot be copied, distributed, or modified without express written permission.
 
 ---
 
