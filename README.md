@@ -156,14 +156,14 @@ ARC is a **thread-safe singleton** that continuously learns from pipeline outcom
 
 ## 🆚 ACARA vs. Baseline RAG — Benchmark Results
 
-Evaluated on a **200-question medical QA dataset** using GPT-4o-mini as the judge:
+Evaluated on a **500-question medical QA dataset** using GPT-4o-mini as the judge:
 
 | Metric | Baseline RAG | ACARA | Δ |
 |---|---|---|---|
-| **Answer Accuracy** | 71.5% | **82.0%** | +10.5% |
-| **Retrieval Precision** | 68.3% | **79.1%** | +10.8% |
-| **Hallucination Rate** | N/A (no validator) | **~4.2%** | — |
-| **Avg Latency** | ~2.1s | ~3.8s | +1.7s |
+| **Answer Accuracy** | 44.6% | **77.4%** | +32.8% |
+| **Retrieval Precision** | 95.8% | **97.9%** | +2.1% |
+| **Hallucination Rate** | N/A (no validator) | **0.0%** | — |
+| **Avg Latency** | ~2.3s | ~6.5s | +4.2s |
 
 > *Small latency cost for significantly higher accuracy and safety. The hallucination validator makes ACARA safer for medical use.*
 
@@ -180,7 +180,7 @@ ACARA/
 │   ├── database.py             # Vector store abstraction (Pinecone / ChromaDB)
 │   ├── models.py               # Pydantic request/response models
 │   ├── eval_benchmark.py       # Evaluation benchmark (ACARA vs Baseline)
-│   ├── eval_testset.py         # 200-question medical QA test set
+│   ├── eval_testset.py         # 500-question medical QA test set
 │   ├── visualize_3d.py         # 3D vector space visualization (Plotly)
 │   └── requirements.txt        # Python dependencies
 │
@@ -277,10 +277,10 @@ Run the full ACARA vs Baseline evaluation:
 ```bash
 cd backend
 # LLM-judge mode (GPT-4o-mini, recommended)
-python eval_benchmark.py --n 200 --mode llm
+python eval_benchmark.py --n 500 --mode llm
 
 # Exact-match mode (faster, no API cost)
-python eval_benchmark.py --n 200 --mode exact
+python eval_benchmark.py --n 500 --mode exact
 
 # Custom dataset (JSONL with 'question' and 'answer' keys)
 python eval_benchmark.py --dataset your_dataset.jsonl --n 500

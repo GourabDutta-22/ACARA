@@ -1,5 +1,5 @@
 """
-Strategically designed 200-question MedQA / MedQuAD test set for ACARA benchmark.
+Strategically designed 500-question MedQA / MedQuAD test set for ACARA benchmark.
 
 Design principle:
   - ~40 easy  : both pipelines answer correctly (establishes baseline floor)

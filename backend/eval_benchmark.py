@@ -14,8 +14,8 @@ Test set: pulled from the MedQA / MedQuAD data already ingested into
 
 Usage:
     cd backend
-    python eval_benchmark.py                          # uses built-in 200-Q set
-    python eval_benchmark.py --dataset path/to/qs.jsonl --n 200
+    python eval_benchmark.py                          # uses built-in 500-Q set
+    python eval_benchmark.py --dataset path/to/qs.jsonl --n 500
     python eval_benchmark.py --mode exact             # exact-match instead of LLM judge
 """
 
@@ -45,7 +45,7 @@ logger = logging.getLogger("eval")
 logger.setLevel(logging.INFO)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Built-in 200-question test set (imported from eval_testset.py)
+# Built-in 500-question test set (imported from eval_testset.py)
 # ─────────────────────────────────────────────────────────────────────────────
 from eval_testset import EVAL_TEST_SET as SAMPLE_TEST_SET  # noqa: E402
 
